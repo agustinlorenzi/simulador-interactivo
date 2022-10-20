@@ -60,7 +60,7 @@ function formaPago() {
                 alert("No es posible esa forma de pago, por favor indique una correcta.")
                 formaPago();
                 break;
-        }       
+        }
     } else {
         alert("Lo invitamos a ver nuestro catalogo, quiza encuentre algo de su interes.");
     }
@@ -74,14 +74,19 @@ function solicitarDatos() {
     let direccion = prompt("Coloque su direccion: ");
     /*aca se llama a la funcion mostrarCompra, que muestra un resumen de la misma, pasando las
     variables locales para que la otra funcion pueda usarlas*/
-    mostrarCompra(nombre,telefono,direccion);
+    mostrarCompra(nombre, telefono, direccion);
 }
 
 //Muestra al usuario un resumen de su compra.
 function mostrarCompra(nombre, telefono, direccion) {
-    alert(nombre + ".\nTelefono de Contacto " + telefono + ".\nCompraste productos capilares por un monto de $" + (total) + "\nLo pagaste en " + cuotas +
-        " pago/s con un interes de $" + interes + "\nY el monto final es de $" + (total + interes) + "\nEnviaremos el pedido a "
-        + direccion);
+    if (nombre != "" && telefono != "" && direccion != "") {
+        alert(nombre + ".\nTelefono de Contacto " + telefono + ".\nCompraste productos capilares por un monto de $" + (total) + "\nLo pagaste en " + cuotas +
+            " pago/s con un interes de $" + interes + "\nY el monto final es de $" + (total + interes) + "\nEnviaremos el pedido a "
+            + direccion);
+    }else{
+        alert("Complete correctamente todos los datos para que podamos enviarle el pedido.")
+        solicitarDatos()
+    }
 }
 
 
