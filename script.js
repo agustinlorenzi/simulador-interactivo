@@ -28,37 +28,39 @@ let interes = 0;
 let cuotas = 0;
 function formaPago() {
     if (total > 0) {
-        alert("Su compra fue de: " + total);
+        alert("Su compra fue de $" + total);
         let pagos = prompt
-            ("¿En cuantos pagos desea abonar esta compra?.\n Siendo el interes: -En un pago sin interes.\n-En 3 pagos 10%.\n -En 6 pagos 15%.\n -En 12 pagos 20%.");
+            ("¿En cuantos pagos desea abonar esta compra?.\n Siendo el interes: \n-En un pago sin interes.\n-En 3 pagos 10%.\n-En 6 pagos 15%.\n-En 12 pagos 20%.");
         switch (pagos) {
             case "1":
                 cuotas = 1;
                 interes = 0;
-                alert("Usted va a pagar " + total);
+                alert("Usted va a pagar $" + total);
+                solicitarDatos();
                 break;
             case "3":
                 cuotas = 3;
                 interes = total * 0.10;
-                alert("Usted va a pagar " + (total + interes));
+                alert("Usted va a pagar $" + (total + interes));
+                solicitarDatos();
                 break;
             case "6":
                 cuotas = 6;
                 interes = total * 0.15;
-                alert("Usted va a pagar " + (total + interes));
+                alert("Usted va a pagar $" + (total + interes));
+                solicitarDatos();
                 break;
             case "12":
                 cuotas = 12;
                 interes = total * 0.20;
-                alert("Usted va a pagar " + (total + interes));
+                alert("Usted va a pagar $" + (total + interes));
+                solicitarDatos();
                 break;
             default:
-                alert("No es posible esa forma de pago.")
+                alert("No es posible esa forma de pago, por favor indique una correcta.")
+                formaPago();
                 break;
-        }
-        /*Llamo aca a la funcion solicitar datos, porque arriba se corrobora si efectivamente hubo una compra
-        para despues pedir los datos*/
-        solicitarDatos();
+        }       
     } else {
         alert("Lo invitamos a ver nuestro catalogo, quiza encuentre algo de su interes.");
     }
