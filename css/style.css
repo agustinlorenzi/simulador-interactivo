@@ -1,0 +1,291 @@
+* {
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* clases del nav */
+
+.navbar-nav me-auto mb-2 mb-lg-0 { 
+    width: 80vw;
+}
+
+.navbar {
+    height: auto;
+    overflow-y: hidden;
+}
+
+.nav-color {
+    background-color: rgba(104, 102, 102, 0.801);
+}
+
+.navbar ul {
+    padding-left: 150px;
+    font-size: 20px;
+}
+
+.navbar-brand img {
+    width: 150px;
+}
+
+.navbar-toggler {
+    background-color: bisque;
+    margin: 10px;
+}
+
+.carrito{
+    height: 50px;
+    margin: 10px;
+}
+
+
+
+/* clases area de servicios de la home */
+
+.row {
+    align-items: center;
+}
+
+.fotos2 img {
+    width: 90vw;
+}
+
+.carousel slide {
+    width: 100vw;
+    margin: 0;
+}
+
+/* footer en general*/
+
+.bg-light {
+    background-color: rgba(109, 106, 106, 0.781);
+}
+
+.mapa {
+    width: 92vw;
+}
+
+.footer {
+    position: relative;
+    bottom: -95px;
+    align-self: flex-end;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    overflow-y: hidden;
+}
+
+
+
+/* clases generales*/
+
+body {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;
+    width: 100vw;
+}
+
+.main {
+    position: relative;
+    top: 95px;
+    height: auto;
+    width: 100vw;
+    overflow-y: hidden;
+}
+
+
+.main-contacto {
+    position: relative;
+    top: 95px;
+    height: auto;
+    width: 100vw;
+    overflow-y: hidden;
+}
+
+
+h1 {
+    overflow-y: hidden;
+}
+
+h2 {
+    overflow-y: hidden;
+}
+
+h3 {
+    overflow-y: hidden;
+}
+
+
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* hover boton de ver mas de productos */
+
+.btn:hover {
+    background-color: burlywood;
+    color: blue;
+}
+
+/* hover botones del menu en el header */
+
+.navbar li:hover {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    border-radius: 10%;
+}
+
+/* clases para contacto */
+
+.boton {
+    display: flex;
+    align-items: center;
+}
+
+/* clases consejos */
+
+.fotos1 img {
+    width: 90vw;
+}
+
+/* Formulario */
+
+.formulario {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.formulario form {
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+}
+
+.formulario form input {
+    width: 70vw;
+
+
+}
+
+.label-input {
+    width: 100vw;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+
+
+
+
+/* medias query */
+
+@media (min-width: 768px) {
+
+    .main-contacto {
+        min-height: 67vh;
+    }
+
+    .input-group {
+        width: 60vw;
+    }
+
+    .fotos1 img {
+        width: 30vw;
+    }
+
+    .fotos2 img {
+        width: 25vw;
+    }
+
+    .local ul {
+        margin: 10px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .local ul li img {
+        width: 28vw;
+        height: auto;
+    }
+
+    .mapa {
+        width: 40vw;
+    }
+
+    .formulario form {
+        width: 50vw;
+
+
+    }
+
+
+    .label-input {
+        width: 85vw;
+
+
+    }
+}
+
+
+@media (min-width: 1024px) {
+
+    .input-group {
+        width: 50vw;
+    }
+
+    .navbar {
+        height: 110px;
+    }
+
+    navbar-brand img {
+        width: 200px;
+    }
+
+    .footer {
+        position: relative;
+        bottom: -110px;
+        left: 0;
+        right: 0;
+    }
+
+    .main {
+        position: relative;
+        top: 110px;
+        height: auto;
+    }
+
+    .main-contacto {
+        position: relative;
+        top: 110px;
+    }
+}
+
+
+@media (min-width: 1366px) {
+
+    .margen {
+        margin-left: 200px;
+    }
+
+    .formulario form {
+        width: 30vw;
+
+
+    }
+}
