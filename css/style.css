@@ -12,8 +12,10 @@
 }
 
 .navbar {
+    width: 100vw;
     height: auto;
-    overflow-y: hidden;
+    /*overflow-y: hidden;*/
+    
 }
 
 .nav-color {
@@ -33,6 +35,8 @@
     background-color: bisque;
     margin: 10px;
 }
+
+
 
 .carrito{
     height: 50px;
@@ -93,6 +97,7 @@ body {
     height: auto;
     width: 100vw;
     overflow-y: hidden;
+    
 }
 
 
@@ -155,17 +160,22 @@ h3 {
 
 /* Formulario */
 
-.formulario {
+/*.formulario {
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+   
 
 
+}*/
+
+.formulario form select{
+    width: 90vw;
 }
 
-.formulario form {
+/*.formulario form {
     width: 80vw;
     display: flex;
     flex-direction: column;
@@ -178,15 +188,15 @@ h3 {
     width: 70vw;
 
 
-}
+}*/
 
-.label-input {
+/*.label-input {
     width: 100vw;
     margin: 10px;
     display: flex;
     justify-content: space-between;
 
-}
+}*/
 
 
 
@@ -228,7 +238,7 @@ h3 {
         width: 40vw;
     }
 
-    .formulario form {
+    /*.formulario form {
         width: 50vw;
 
 
@@ -239,11 +249,19 @@ h3 {
         width: 85vw;
 
 
-    }
+    }*/
 }
 
 
 @media (min-width: 1024px) {
+
+    * {
+        overflow-x: visible;
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+  
 
     .input-group {
         width: 50vw;
@@ -283,9 +301,9 @@ h3 {
         margin-left: 200px;
     }
 
-    .formulario form {
+    /*.formulario form {
         width: 30vw;
 
 
-    }
+    }*/
 }

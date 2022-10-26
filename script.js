@@ -1,26 +1,46 @@
 
 //Datos. Codigo, descripcion y precios de los productos.
 
-let articulo1 = "1 - Crema Hidratante para Manos $500";
-let articulo2 = "2 - Oro Liquido sin Formol $350";
-let articulo3 = "3 - Tratamiento a Base de Aceites 80ml $475";
-let articulo4 = "4 - Kit Antifrizz: 1 Shampoo, 1 Antifrizz y 1 Nutrición $1050";
-let articulo5 = "5 - Manteca Desmaquillante $735";
-let articulo6 = "6 - Exfoliante de Labios + Bálsamo Hidratante $1528";
-let articulo7 = "7 - Contorno de Ojos con Cafeína y Q10 $875";
-let articulo8 = "8 - Mascarilla Capilar $983";
-let articulo9 = "9 - Bálsamo de karité , cacao , almendras, vitamina Hidratante $759";
-let articulo10 = "10 - Fragancia Natural $253";
-let articulo11 = "11 - Mascarilla Esfoliante Facial $899";
-let articulo12 = "12 - Exfoliante de Labios $423";
-
-
 //Funciones.
+class Articulo {
+    constructor(codigo, descripcion, precio) {
+        this.codigo = Number(codigo);
+        this.descripcion = descripcion;
+        this.precio = Number(precio);
+    }
+    mostrarEleccion(cantidad, descripcion, precio) {
+        alert("Usted compro " + cantidad + " " + descripcion + " de $" + precio + " c/u. \nEste articulo representa en su cuenta $" + subtotal + ".")
+
+    }
+}
+
+//objetos
+const articulo1 = new Articulo(1, "Crema Hidratante para Manos", 500);
+const articulo2 = new Articulo(2, "Oro Liquido sin Formol", 350);
+const articulo3 = new Articulo(3, "Tratamiento a base de aceites 80 ml", 475);
+const articulo4 = new Articulo(4, "Kit Antifrizz: 1 Shampoo, 1 Antifrizz y 1 Nutrición", 1050);
+const articulo5 = new Articulo(5, "Manteca Desmaquillante", 735);
+const articulo6 = new Articulo(6, "Exfoliante de Labios + Bálsamo Hidratante", 1528);
+const articulo7 = new Articulo(7, "Contorno de Ojos con Cafeína y Q10", 875);
+const articulo8 = new Articulo(8, "Mascarilla Capilar", 983);
+const articulo9 = new Articulo(9, "Balsamo de Karité, cacao, almendras, vitamina Hidratante", 759);
+const articulo10 = new Articulo(10, "Fragancia Natural", 253);
+const articulo11 = new Articulo(11, "Mascarilla Esfoliante Facial", 899);
+const articulo12 = new Articulo(12, "Exfoliante de Labios", 423);
+
+const articulos = [articulo1, articulo2, articulo3, articulo4, articulo5, articulo6, articulo7, articulo8, articulo9, articulo10, articulo11, articulo12]
+
 
 //Suma el monto total de la compra.
 let total = 0;
-function totalCarrito(monto, cantidad) {
-    total = total + (monto * cantidad);
+let subtotal = 0;
+let listadoCarrito = []
+let comprado = ""
+function totalCarrito(codigo, descripcion, precio, cantidad) {
+    subtotal = precio * cantidad;
+    total = total + subtotal;
+    comprado = "codigo: " + codigo + ". " + descripcion + " $" + precio + ". Cantidad:" + cantidad;
+    listadoCarrito.push(comprado)
 }
 
 //Calcula el monto a pagar segun la forma de pago, teniendo en cuenta los intereses.
@@ -78,12 +98,22 @@ function solicitarDatos() {
 }
 
 //Muestra al usuario un resumen de su compra.
+const guardado1 = [];
+let guardar1 = "";
 function mostrarCompra(nombre, telefono, direccion) {
     if (nombre != "" && telefono != "" && direccion != "") {
-        alert(nombre + ".\nTelefono de Contacto " + telefono + ".\nCompraste productos capilares por un monto de $" + (total) + "\nLo pagaste en " + cuotas +
+        for (const articulo of listadoCarrito) {
+            guardar1 = articulo
+            guardado1.push(guardar1)
+        }
+        alert("Los articulos que compraste son: \n" + guardado1.join("\n") + "\n" + nombre + ".\nTelefono de Contacto " + telefono + ".\nCompraste productos capilares por un monto de $" + (total) + "\nLo pagaste en " + cuotas +
             " pago/s con un interes de $" + interes + "\nY el monto final es de $" + (total + interes) + "\nEnviaremos el pedido a "
             + direccion);
-    }else{
+
+        /*alert(nombre + ".\nTelefono de Contacto " + telefono + ".\nCompraste productos capilares por un monto de $" + (total) + "\nLo pagaste en " + cuotas +
+            " pago/s con un interes de $" + interes + "\nY el monto final es de $" + (total + interes) + "\nEnviaremos el pedido a "
+            + direccion);*/
+    } else {
         alert("Complete correctamente todos los datos para que podamos enviarle el pedido.")
         solicitarDatos()
     }
@@ -97,20 +127,31 @@ let pregunta = prompt("Desea cargar algun articulo al carrito? si/no")
 
 while (pregunta == "si") {
 
-    alert("Lista de Articulos: " + "\n" + articulo1 + "\n" + articulo2 + "\n" + articulo3 + "\n" + articulo4 +
+    let guardado = []
+    let guardar = ""
+    for (const articulo of articulos) {
+        guardar = articulo.codigo + " " + articulo.descripcion + " $" + articulo.precio
+        guardado.push(guardar)
+    }
+    alert("Lista de Articulos y codigos(utilice el codigo del principio para completar el carrito): \n" + guardado.join("\n"))
+
+    /*alert("Lista de Articulos: " + "\n" + (articulo1.codigo + " - " + articulo1.descripcion + " $" + articulo1.precio)+ "\n" + articulo2 + "\n" + articulo3 + "\n" + articulo4 +
         "\n" + articulo5 + "\n" + articulo6 + "\n" + articulo7 + "\n" + articulo8 + "\n" + articulo9 + "\n" + articulo10 +
         "\n" + articulo11 + "\n" + articulo12 + "\n" +
-        "Complete en la siguiente pantalla el codigo del articulo de su eleccion.")
+        "Complete en la siguiente pantalla el codigo del articulo de su eleccion.")*/
 
     let opcion = prompt("¿Que articulo necesita?, coloque su codigo");
     let cantidad = Number(prompt("¿Que cantidad deseas de este producto?"))
-
+    //let descripcion = "";
+    //let precio = "";
     switch (opcion) {
         case "1":
-            totalCarrito(500, cantidad);
+            totalCarrito(articulo1.codigo, articulo1.descripcion, articulo1.precio, cantidad);
+            articulo1.mostrarEleccion(cantidad, articulo1.descripcion, articulo1.precio);
             break
         case "2":
-            totalCarrito(350, cantidad);
+            totalCarrito(articulo2.codigo, articulo2.descripcion, articulo2.precio, cantidad);
+            articulo2.mostrarEleccion(cantidad, articulo2.descripcion, articulo2.precio);
             break
         case "3":
             totalCarrito(475, cantidad);

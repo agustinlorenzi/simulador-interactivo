@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <header class="fixed-top nav-color">
+    <header class="header fixed-top nav-color">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand" href="#"><img src="./img/Logo.jpg"
@@ -28,10 +28,17 @@
                     <ul class="navbar-nav me-0 mb-0 p-0 mb-lg-0 margen">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active text-white" href="#">Productos</a>
-                        </li>
+                        </li>                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Productos
+                            </a>
+                            <ul class="dropdown-menu ps-2">
+                              <li><a class="dropdown-item" href="#">Categoria 1</a></li>
+                              <li><a class="dropdown-item" href="#">Categoria 2</a></li>                              
+                              <li><a class="dropdown-item" href="#">Categoria 3</a></li>
+                            </ul>
+                          </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Consejos</a>
                         </li>
