@@ -8,9 +8,9 @@ class Articulo {
         this.descripcion = descripcion;
         this.precio = Number(precio);
     }
-    mostrarEleccion(cantidad, descripcion, precio) {
+    /*mostrarEleccion(cantidad, descripcion, precio) {
         alert("Usted compro " + cantidad + " " + descripcion + " de $" + precio + " c/u. \nEste articulo representa en su cuenta $" + subtotal + ".")
-    }
+    }*/
 }
 
 //datos de los objetos articulos
@@ -31,30 +31,84 @@ const articulo12 = new Articulo(12, "Exfoliante de Labios", 423);
 const articulos = [articulo1, articulo2, articulo3, articulo4, articulo5, articulo6, articulo7, articulo8, articulo9, articulo10, articulo11, articulo12]
 
 //Arma el listado del carrito
-const listadoCarrito = [];
+/*const listadoCarrito = [];
 let comprado = ";"
-function detalleCarro(codigo, descripcion, cantidad, precio) {
-    comprado = "Codigo: " + codigo + ". " + "Descripción: " + descripcion + ". Precio: $" + precio + ". Cantidad: " + cantidad;
+function detalleCarro(artSeleccionado, cant) {
+    //comprado = "Codigo: " + codigo + ". " + "Descripción: " + descripcion + ". Precio: $" + precio + ". Cantidad: " + cantidad;
+    comprado = artSeleccionado.codigo + artSeleccionado.descripcion + artSeleccionado.precio + cant;
     listadoCarrito.push(comprado)
+}*/
+
+const comprados = [];
+//funcion eleccion
+function eleccion() {
+    let elegir = prompt("Elija como proceder como proceder con la compra:\n1-Agregar articulos.\n2-Modificar cantidad.\n3-Eliminar Articulo.\n4-Confirmar carro.")
+    if (elegir !== "") {
+        switch (elegir) {
+            case "1":
+                pregunta = "si"
+                listaPrecio();
+                break;
+            case "2":
+                modificarCantidad();
+                break;
+            case "3":
+                eliminar();
+                break;
+            case "4":
+                formaPago();
+            default:
+                break;
+
+        }
+    }else{
+        alert("Debe elegir una opcion.")
+        eleccion()
+    }
 }
 
-//Mostrar antes del pago como va el carro
-const guardado1 = [];
+
+//modificar cantidad de los articulos
+
+function modificarCantidad() {
+    let modificar = Number(prompt("¿Que articulo desea modificar su cantidad?: "));
+    const existe = comprados.some(comprado => comprado.codigo === modificar);
+    if (existe !== false) {
+        let nuevaCantidad = parseInt(prompt("¿Que cantidad desea?: "))
+        const artModificar = comprados.find((el) => el.codigo === modificar);
+        artModificar.cant = nuevaCantidad;
+        muestraIntermediaCarro();
+    } else {
+        alert("Ese articulo no se encuentra en su carro.");
+        eleccion();
+    }
+}
+
+//Mostrar carro antes del pago
+
 let guardar1 = "";
 function muestraIntermediaCarro() {
-    for (const articulo of listadoCarrito) {
-        guardar1 = articulo
+    const guardado1 = [];
+    for (const articulo of comprados) {
+        guardar1 = "Codigo: " + articulo.codigo + ". Descripcion: " + articulo.descripcion + ". $" + articulo.precio + ". Cant: " + articulo.cant;
         guardado1.push(guardar1)
     }
+    totalCarrito();
     alert("Los articulos que compraste son: \n" + guardado1.join("\n") + "\nY el total represento: $" + total)
+    eleccion();
+    //funcion eleccion(agregar producto, modificar la cantidad de un producto del carro, eliminar producto o 
+    //confirmar compra)
 }
+
+
 
 //Suma el monto total de la compra.
 let total = 0;
-let subtotal = 0;
-function totalCarrito(precio, cantidad) {
-    subtotal = precio * cantidad;
-    total = total + subtotal;
+function totalCarrito() {
+    total = 0;
+    for (const articulo of comprados) {
+        total = total + articulo.precio * articulo.cant;
+    }
 }
 
 //Calcula el monto a pagar segun la forma de pago, teniendo en cuenta los intereses.
@@ -104,9 +158,15 @@ function solicitarDatos() {
 }
 
 //Muestra al usuario un resumen de su compra.
-
+const guardado1 = []
+let guard = "";
 function mostrarCompra(nombre, telefono, direccion) {
+
     if (nombre != "" && telefono != "" && direccion != "") {
+        for (const articulo of comprados) {
+            guard = "Codigo: " + articulo.codigo + ". Descripcion: " + articulo.descripcion + ". $" + articulo.precio + ". Cant: " + articulo.cant;
+            guardado1.push(guard);
+        }
         alert("Los articulos que compraste son: \n" + guardado1.join("\n") + "\n" + "Cliente: " + nombre + ".\nTelefono de Contacto " + telefono + ".\nCompraste productos capilares por un monto de $" + (total) + "\nLo pagaste en " + cuotas +
             " pago/s con un interes de $" + interes + "\nY el monto final es de $" + (total + interes) + "\nEnviaremos el pedido a "
             + direccion);
@@ -116,11 +176,34 @@ function mostrarCompra(nombre, telefono, direccion) {
     }
 }
 
+// constructor articulos comprados
+class Comprado {
+    constructor(codigo, descripcion, precio, cant) {
+        this.codigo = Number(codigo);
+        this.descripcion = descripcion;
+        this.precio = Number(precio);
+        this.cant = Number(cant);
+    }
+    mostrarEleccion(cantidad, descripcion, precio) {
+        alert("Usted compro " + cantidad + " " + descripcion + " de $" + precio + " c/u. \nEste articulo representa en su cuenta $" + subtotal + ".")
+    }
+}
 
+//funcion de compra
+let subtotal = 0;
+function compra(codigo, descripcion, precio, cant) {
+    const comprado = new Comprado(codigo, descripcion, precio, cant);
+    comprados.push(comprado);
+    subtotal = precio * cant;
+    comprado.mostrarEleccion(comprado.codigo, comprado.descripcion, comprado.precio, comprado.cant);
+}
 
-//Funcion de Compra
+//Funcion mostrar lista de precios general de articulos
 
-function compra (){
+function listaPrecio() {
+    let opcion = 0;
+    let cantidad = 0;
+    let cant = 0;
     while (pregunta == "si") {
         let guardado = []
         let guardar = ""
@@ -130,83 +213,49 @@ function compra (){
         }
         alert("Lista de Articulos y codigos(utilice el codigo del principio para completar el carrito):\n" + guardado.join("\n"))
 
-        let opcion = prompt("¿Que articulo necesita?, coloque su codigo");
-        let cantidad = parseInt(prompt("¿Que cantidad deseas de este producto?"))
+        opcion = Number(prompt("¿Que articulo necesita?, coloque su codigo"));
+        cantidad = Number(prompt("¿Que cantidad deseas de este producto?"));
+        console.log(cantidad)
         if (opcion !== "" && opcion !== 0 && cantidad !== "" && cantidad !== 0) {
-            switch (opcion) {
-                case "1":
-                    totalCarrito(articulo1.precio, cantidad);
-                    detalleCarro(articulo1.codigo, articulo1.descripcion, cantidad, articulo1.precio);
-                    articulo1.mostrarEleccion(cantidad, articulo1.descripcion, articulo1.precio);
-                    break
-                case "2":
-                    totalCarrito(articulo2.codigo, articulo2.descripcion, articulo2.precio, cantidad);
-                    articulo2.mostrarEleccion(cantidad, articulo2.descripcion, articulo2.precio);
-                    break
-                case "3":
-                    totalCarrito(475, cantidad);
-                    break
-                case "4":
-                    totalCarrito(1050, cantidad);
-                    break
-                case "5":
-                    totalCarrito(735, cantidad);
-                    break
-                case "6":
-                    totalCarrito(1528, cantidad);
-                    break
-                case "7":
-                    totalCarrito(875, cantidad);
-                    break
-                case "8":
-                    totalCarrito(983, cantidad);
-                    break
-                case "9":
-                    totalCarrito(759, cantidad);
-                    break
-                case "10":
-                    totalCarrito(253, cantidad);
-                    break
-                case "11":
-                    totalCarrito(899, cantidad);
-                    break
-                case "12":
-                    totalCarrito(423, cantidad);
-                    break
-                default:
-                    alert("El codigo del articulo no es correcto.")
-                    break
-            }
-            pregunta = prompt("¿Desea cargar otro articulo? si/no")            
+            cant = parseInt(cantidad);
+            let artSeleccionado = articulos.find((el) => el.codigo === opcion);
+            console.log(artSeleccionado);
+            compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant);
+            pregunta = prompt("¿Desea cargar otro articulo? si/no")
         } else {
             alert("Cargue algun producto o cantidad.")
         }
     }
+    muestraIntermediaCarro();
 }
 
-/*let cant = 0;
-let elim = "";
-function eliminar(){
-    let articuloEliminar =  listadoCarrito.includes(prompt("¿Que articulo desea eliminar de la lista?")).toLowerCase();
-    for (const objeto of listadoCarrito){
-        if (objeto.descripcion == articuloEliminar){        
-            elim = array.indexOf(objeto)       
-        }      
+
+let borrar = 0;
+function eliminar() {
+    borrar = 0;
+    let elim = Number(prompt("¿Que articulo desea eliminar?: "));
+    const existe = comprados.some(comprado => comprado.codigo === elim);
+    if (existe !== false) {
+        for (const objeto of comprados) {
+            if (objeto.codigo === elim) {
+                borrar = comprados.indexOf(objeto)
+            }
+        }
+    } else {
+        alert("Ese articulo no se encuentra en su carro.");
+        eleccion();
     }
-    array.splice(elim,1)
+    comprados.splice(borrar, 1)
     muestraIntermediaCarro()
-}*/
+}
 
 
 
-//Bloque principal. Permite al usuario seleccionar el articulo de su interes.
+//Inicio del programa.
 
 let pregunta = (prompt("Desea cargar algun articulo al carrito? si/no")).toLowerCase();
-
 if (pregunta === "si") {
-    compra();
-    muestraIntermediaCarro();    
-    formaPago();
+    listaPrecio();
 } else {
     alert("Lo invitamos a ver nuestro catalogo, quiza encuentre algo de su interes.");
 }
