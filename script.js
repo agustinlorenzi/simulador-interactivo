@@ -201,15 +201,22 @@ function listaPrecio(pregunta) {
         }
         alert("Lista de Articulos y codigos(utilice el codigo del principio para completar el carrito):\n" + guardado.join("\n"))
         opcion = Number(prompt("¿Que articulo necesita?, coloque su codigo"));
+        const existencia = articulos.some(articulos => articulos.codigo === opcion);
         cantidad = Number(prompt("¿Que cantidad deseas de este producto?"));
-        if (opcion !== "" && opcion !== 0 && cantidad !== "" && cantidad !== 0) {
-            cant = parseInt(cantidad);
-            let artSeleccionado = articulos.find((el) => el.codigo === opcion);
-            subTotal(artSeleccionado.precio, cant)
-            compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant, subtotal);
-            pregunta = prompt("¿Desea cargar otro articulo? si/no")
-        } else {
-            alert("Cargue algun producto o cantidad.")
+        if (existencia !== false) {
+            if (opcion !== "" && opcion !== 0 && cantidad !== "" && cantidad !== 0) {
+                cant = parseInt(cantidad);
+                let artSeleccionado = articulos.find((el) => el.codigo === opcion);
+                subTotal(artSeleccionado.precio, cant)
+                compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant, subtotal);
+                pregunta = prompt("¿Desea cargar otro articulo? si/no")
+            } else {
+                alert("Cargue algun producto o cantidad.")
+            }
+        }else{
+            alert("No tenemos ese articulo, lo invitamos a ver nuevamente nuestra disponibilidad.")
+            pregunta = "si"
+            listaPrecio(pregunta)
         }
     }
     muestraIntermediaCarro();
