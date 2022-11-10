@@ -17,8 +17,7 @@
     <header class="header fixed-top nav-color">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#"><img src="./img/Logo.jpg"
-                        alt="logo de victoria bacci peluqueria"></a>
+                <a class="navbar-brand" href="#"><img src="./img/Logo.jpg" alt="logo de victoria bacci peluqueria"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -28,17 +27,18 @@
                     <ul class="navbar-nav me-0 mb-0 p-0 mb-lg-0 margen">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                        </li>                        
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Productos
+                            <a class="nav-link dropdown-toggle active text-white" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Productos
                             </a>
                             <ul class="dropdown-menu ps-2">
-                              <li><a class="dropdown-item" href="#">Categoria 1</a></li>
-                              <li><a class="dropdown-item" href="#">Categoria 2</a></li>                              
-                              <li><a class="dropdown-item" href="#">Categoria 3</a></li>
+                                <li><a class="dropdown-item" href="#">Categoria 1</a></li>
+                                <li><a class="dropdown-item" href="#">Categoria 2</a></li>
+                                <li><a class="dropdown-item" href="#">Categoria 3</a></li>
                             </ul>
-                          </li>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Consejos</a>
                         </li>
@@ -56,7 +56,8 @@
                             </form>
                         </li>
                         <li>
-                            <a href=""><img class="carrito" src="./img/carrito-de-compras (3).png" alt=""></a>
+                            <a id="carrito" href=""><img class="carrito" src="./img/carrito-de-compras (3).png"
+                                    alt=""></a>
 
                         </li>
                     </ul>
@@ -65,7 +66,8 @@
         </nav>
     </header>
     <main class="main text-bg-secondary p-3">
-        <h1 class="text-center">PRODUCTOS</h1>
+
+        <h1 id="tituloUno" class="text-center">PRODUCTOS</h1>
 
         <h2 class="m-4">Categoria 1</h2>
         <div class="d-flex flex-wrap justify-content-around">
@@ -74,7 +76,7 @@
                 <div class="card-body text-dark bg-secondary bg-opacity-25">
                     <p class="card-title text-center fs-5 fw-bold">Crema Hidratante para Manos</p>
                     <p class="card-text">$500</p>
-                    <a href="#pedir" class="btn btn-primary">Agregar</a>
+                    <a id="agregar" href="#pedir" class="btn btn-primary">Agregar</a>
                 </div>
             </div>
             <div class="card mt-3 mb-3" style="width: 18rem;">
@@ -178,40 +180,56 @@
             <h1 id="pedir">Realice su Pedido</h1>
             <p>Los campos con * son obligatorios.</p>
             <form action="#" method="get">
-                <select name="eleccion">
+                <select name="eleccion" id="articulos">
                     <option value="-" required>Selecciona el Producto Capilar:*</option>
-                    <option value="Crema Hidratante para Manos">Crema Hidratante para Manos</option>
-                    <option value="Oro Liquido sin Formol">Oro Liquido sin Formol</option>
-                    <option value="Tratamiento a Base de Aceites 80ml">Tratamiento a Base de Aceites 80ml</option>
-                    <option value="Kit Antifrizz: 1 Shampoo, 1 Antifrizz y 1 Nutrición">
+                    <option value=1>Crema Hidratante para Manos</option>
+                    <option value="2">Oro Liquido sin Formol</option>
+                    <option value="3">Tratamiento a Base de Aceites 80ml</option>
+                    <option value="4">
                         Kit Antifrizz: 1 Shampoo, 1 Antifrizz y 1 Nutrición</option>
-                    <option value="Manteca Desmaquillante">Manteca Desmaquillante</option>
-                    <option value="Exfoliante de Labios + Bálsamo Hidratante">Exfoliante de Labios + Bálsamo Hidratante</option>
-                    <option value="Contorno de Ojos con Cafeína y Q10">Contorno de Ojos con Cafeína y Q10</option>
-                    <option value="Mascarilla Capilar">Mascarilla Capilar</option>
-                    <option value="Bálsamo de karité , cacao , almendras, vitamina e
-                    Hidratante">Bálsamo de karité , cacao , almendras, vitamina e
-                    Hidratante</option>
-                    <option value="Fragancia Natural">Fragancia Natural</option>
-                    <option value="Mascarilla Esfoliante Facial">Mascarilla Esfoliante Facial</option>
-                    <option value="Exfoliante de Labios">Exfoliante de Labios</option>
+                    <option value="5">Manteca Desmaquillante</option>
+                    <option value="6">Exfoliante de Labios + Bálsamo Hidratante</option>
+                    <option value="7">Contorno de Ojos con Cafeína y Q10</option>
+                    <option value="8">Mascarilla Capilar</option>
+                    <option value="9">Bálsamo de karité , cacao , almendras, vitamina e
+                        Hidratante</option>
+                    <option value="10">Fragancia Natural</option>
+                    <option value="11">Mascarilla Esfoliante Facial</option>
+                    <option value="12">Exfoliante de Labios</option>
                 </select>
                 <div class="label-input">
                     <label for="cantidad">Cantidad:*</label>
-                    <input type="number" placeholder="Cantidad" name="cantidad" required>
-                </div>                
+                    <input id="cantidad" type="number" placeholder="Cantidad" name="cantidad" required>
+                </div>
                 <div class="label-input">
                     <label for="precio">Precio:</label>
-                    <input type="number" placeholder="Precio" name="precio" disabled>
-                </div>                
+                    <div id="precio">
+                        <input type="number" placeholder="Precio" name="precio" disabled>
+                    </div>
+                </div>
+
+                <div id="grabar"></div>
                 <div class="label-input">
-                <label for="number">Subtotal:</label>
-                <input type="number" placeholder="Subtotal" name="subtotal" disabled>
-                </div>                
-    
-                <button>Agregar al Carrito</button>
-    
+                    <label for="number">Subtotal:</label>
+                    <div id="subtotal">
+                        <input type="number" placeholder="Subtotal" name="subtotal" disabled>
+                    </div>
+                </div>
+                <!-- <input type="submit" value="Agregar al Carrito"> -->
+                <button id="agregarCarrito">Agregar al Carrito</button>
+
             </form>
+
+            <div id="ponerCantidad"></div>
+            <div id="tituloCarrito"></div>
+            <div class="carritoHtml" id="verCarrito">
+
+
+            </div>
+            <div id="totalCarrito25"></div>
+
+
+
     </main>
 
 

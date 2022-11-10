@@ -1,5 +1,5 @@
 * {
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -7,7 +7,7 @@
 
 /* clases del nav */
 
-.navbar-nav me-auto mb-2 mb-lg-0 { 
+.navbar-nav me-auto mb-2 mb-lg-0 {
     width: 80vw;
 }
 
@@ -15,7 +15,7 @@
     width: 100vw;
     height: auto;
     /*overflow-y: hidden;*/
-    
+
 }
 
 .nav-color {
@@ -38,7 +38,9 @@
 
 
 
-.carrito{
+
+
+.carrito {
     height: 50px;
     margin: 10px;
 }
@@ -55,10 +57,10 @@
     width: 90vw;
 }
 
-.carousel slide {
+/*.carousel slide {
     width: 100vw;
     margin: 0;
-}
+}*/
 
 /* footer en general*/
 
@@ -66,11 +68,11 @@
     background-color: rgba(109, 106, 106, 0.781);
 }
 
-.mapa {
+/*.mapa {
     width: 92vw;
-}
+}*/
 
-.footer {
+/*.footer {
     position: relative;
     bottom: -95px;
     align-self: flex-end;
@@ -78,7 +80,7 @@
     left: 0;
     right: 0;
     overflow-y: hidden;
-}
+}*/
 
 
 
@@ -89,25 +91,34 @@ body {
     flex-wrap: wrap;
     min-height: 100vh;
     width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .main {
     position: relative;
     top: 95px;
     height: auto;
+    margin: 0;
+    padding: 0;
     width: 100vw;
-    overflow-y: hidden;
-    
+    overflow-x: hidden;
+
+}
+
+.header {
+    overflow-x: hidden;
 }
 
 
-.main-contacto {
+/*.main-contacto {
     position: relative;
     top: 95px;
     height: auto;
     width: 100vw;
     overflow-y: hidden;
-}
+}*/
 
 
 h1 {
@@ -160,20 +171,40 @@ h3 {
 
 /* Formulario */
 
-/*.formulario {
+.formulario {
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-   
+    overflow-x: hidden;
+    margin: 0%;
+    padding: 0%;
 
-
-}*/
-
-.formulario form select{
-    width: 90vw;
 }
+
+.formulario form {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    align-items: center;
+
+}
+
+
+.formulario form select {
+    display: flex;
+    width: 80vw;
+}
+
+.formulario form button {
+    display: flex;
+    width: 80vw;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 /*.formulario form {
     width: 80vw;
@@ -190,13 +221,41 @@ h3 {
 
 }*/
 
-/*.label-input {
-    width: 100vw;
+.label-input {
+    width: 80vw;
     margin: 10px;
     display: flex;
     justify-content: space-between;
 
-}*/
+}
+
+#tituloCarrito {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin-top: 40px;
+
+
+
+}
+
+
+/* CLASES DE LA TABLA DEL CARRITO DE COMPRAS */
+  
+
+
+.table tr th {
+    border: 1px solid black;
+    text-align: center;
+    width: 10vw;
+}
+
+.table1 tr td {
+
+    border: 1px solid black;
+    text-align: center;
+    width: 10vw;
+}
 
 
 
@@ -238,18 +297,22 @@ h3 {
         width: 40vw;
     }
 
-    /*.formulario form {
+    .formulario form {
         width: 50vw;
-
-
     }
 
+    .formulario form select {
+        width: 50vw;
+    }
 
     .label-input {
-        width: 85vw;
+        width: 50vw;
+    }
 
+    .formulario form button {
+        width: 50vw;
+    }
 
-    }*/
 }
 
 
@@ -261,7 +324,7 @@ h3 {
         padding: 0;
         margin: 0;
     }
-  
+
 
     .input-group {
         width: 50vw;
@@ -301,9 +364,19 @@ h3 {
         margin-left: 200px;
     }
 
-    /*.formulario form {
+    .formulario form {
         width: 30vw;
+    }
 
+    .formulario form select {
+        width: 30vw;
+    }
 
-    }*/
+    .label-input {
+        width: 30vw;
+    }
+
+    .formulario form button {
+        width: 30vw;
+    }
 }

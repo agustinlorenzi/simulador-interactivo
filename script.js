@@ -1,5 +1,4 @@
 
-///////////////////////////////////////Datos. Codigo, descripcion y precios de los productos.
 
 //Clase constructora de los objetos articulos
 class Articulo {
@@ -27,143 +26,43 @@ const articulo12 = new Articulo(12, "Exfoliante de Labios", 423);
 //array que contiene todo el listado de articulos
 const articulos = [articulo1, articulo2, articulo3, articulo4, articulo5, articulo6, articulo7, articulo8, articulo9, articulo10, articulo11, articulo12]
 
-
-
-
-
-///////////////funcion eleccion, donde el usuario puede elegir si anexa articulos, cambiar cantidades, eliminar items o 
-//confirmar la compra.
-function eleccion() {
-    let elegir = prompt("Elija como proceder con la compra:\n1-Agregar articulos.\n2-Modificar cantidad.\n3-Eliminar Articulo.\n4-Confirmar carro.")
-    if (elegir !== "") {
-        switch (elegir) {
-            case "1":
-                pregunta = "si";
-                listaPrecio(pregunta);
-                break;
-            case "2":
-                modificarCantidad();
-                break;
-            case "3":
-                eliminar();
-                break;
-            case "4":
-                if (comprados.length !== 0) {
-                    formaPago();
-                } else {
-                    alert("El carrito esta vacio.")
-                    principio()
-                }
-            default:
-                break;
-        }
-    } else {
-        alert("Debe elegir una opcion.")
-        eleccion()
-    }
-}
-
-
-
-
-/////////////////////////////////////////////////////Funciones Generales.
-//Mostrar carro antes del pago.
-let guardar1 = "";
-function muestraIntermediaCarro() {
-    let guardado1 = [];
-    for (const articulo of comprados) {
-        guardar1 = "Codigo: " + articulo.codigo + ". Descripcion: " + articulo.descripcion + ". $" + articulo.precio + ". Cant: " + articulo.cant + ". Subtotal: " + articulo.subtotal;
-        guardado1.push(guardar1)
-    }
-    totalCarrito();
-    alert("Los articulos que compraste son: \n" + guardado1.join("\n") + "\nY el total represento: $" + total)
-    eleccion();
-}
-
 //subtotal.
 let subtotal = 0;
 function subTotal(precio, cant) {
     subtotal = 0;
     subtotal = precio * cant;
+    let containerSubtotal = document.getElementById("subtotal")
+    containerSubtotal.innerHTML = `<input type="number" placeholder=  "$ ${subtotal}" name="precio" disabled>`
 }
 
-//Suma el monto total de la compra.
 let total = 0;
 function totalCarrito() {
     total = 0;
+
     for (const articulo of comprados) {
+
         total = total + articulo.precio * articulo.cant;
+
+        let padre = document.getElementById("verCarrito")
+        let contenedor = document.createElement("div");
+        contenedor.innerHTML = `
+        <table class="table1" border="1" cellpading="20" cellspacing="0">                       
+                        <tr>
+                            <td>${articulo.codigo}</td>
+                            <td>${articulo.descripcion}</td>
+                            <td>${articulo.cant}</td>
+                            <td> $ ${articulo.precio}</td>
+                            <td> $ ${articulo.subtotal}</td>
+                        </tr>                            
+                    </table>`;
+        padre.appendChild(contenedor);
     }
+    let padre2 = document.getElementById("totalCarrito25")
+    padre2.innerHTML = `<h2>Total:  $ ${total}</h2>`;
+    opcion.value = `-`
+
 }
 
-//Calcula el monto a pagar segun la forma de pago, teniendo en cuenta los intereses.
-let interes = 0;
-let cuotas = 0;
-function formaPago() {
-    let pagos = prompt
-        ("¿En cuantos pagos desea abonar esta compra?.\n Siendo el interes: \n-En un pago sin interes.\n-En 3 pagos 10%.\n-En 6 pagos 15%.\n-En 12 pagos 20%.");
-    switch (pagos) {
-        case "1":
-            cuotas = 1;
-            interes = 0;
-            alert("Usted va a pagar $" + total);
-            break;
-        case "3":
-            cuotas = 3;
-            interes = total * 0.10;
-            alert("Usted va a pagar $" + (total + interes));
-            break;
-        case "6":
-            cuotas = 6;
-            interes = total * 0.15;
-            alert("Usted va a pagar $" + (total + interes));
-            break;
-        case "12":
-            cuotas = 12;
-            interes = total * 0.20;
-            alert("Usted va a pagar $" + (total + interes));
-            break;
-        default:
-            alert("No es posible esa forma de pago, por favor indique una correcta.")
-            formaPago();
-            break;
-    }
-    solicitarDatos();
-}
-
-//Solicita los datos para enviar su compra al consumidor.
-function solicitarDatos() {
-    alert("Complete los siguientes datos para que le enviemos su pedido.");
-    let nombre = prompt("Coloque su nombre completo: ");
-    let telefono = Number(prompt("Coloque su numero telefonico: "));
-    let direccion = prompt("Coloque su direccion: ");
-    /*aca se llama a la funcion mostrarCompra, que muestra un resumen de la misma, pasando las
-    variables locales para que la otra funcion pueda usarlas*/
-    mostrarCompra(nombre, telefono, direccion);
-}
-
-//Muestra al usuario un resumen de su compra.
-const guardado2 = []
-let guard = "";
-function mostrarCompra(nombre, telefono, direccion) {
-    if (nombre !== "" && telefono !== "" && direccion !== "") {
-        for (const articulo of comprados) {
-            guard = "Codigo: " + articulo.codigo + ". Descripcion: " + articulo.descripcion + ". $" + articulo.precio + ". Cant: " + articulo.cant + ". Subtotal: " + articulo.subtotal;
-            guardado2.push(guard);
-        }
-        alert("Los articulos que compraste son: \n" + guardado2.join("\n") + "\n" + "Cliente: " + nombre + ".\nTelefono de Contacto " + telefono + ".\nCompraste productos capilares por un monto de $" + total + "\nLo pagaste en " + cuotas +
-            " pago/s con un interes de $" + interes + "\nY el monto final es de $" + (total + interes) + "\nEnviaremos el pedido a "
-            + direccion);
-    } else {
-        alert("Complete correctamente todos los datos para que podamos enviarle el pedido.")
-        solicitarDatos()
-    }
-}
-
-
-
-
-////////////////////////////Funciones de Agregado, modificacion, eliminacion o confirmacion de articulos.
 
 // constructor articulos comprados
 class Comprado {
@@ -174,121 +73,167 @@ class Comprado {
         this.cant = Number(cant);
         this.subtotal = Number(subtotal)
     }
-    mostrarEleccion(cantidad, descripcion, precio, subtotal) {
+    /*mostrarEleccion(cantidad, descripcion, precio, subtotal) {
         alert("Usted compro " + cantidad + " " + descripcion + " de $" + precio + " c/u. \nEste articulo representa en su cuenta $" + subtotal + ".")
-    }
+    }*/
 }
 
 //funcion de compra, forma el array de los objetos articulos comprados
-const comprados = [];
+let comprados = [];
 function compra(codigo, descripcion, precio, cant, subtotal) {
     const comprado = new Comprado(codigo, descripcion, precio, cant, subtotal);
     comprados.push(comprado);
-    comprado.mostrarEleccion(comprado.cant, comprado.descripcion, comprado.precio, comprado.subtotal);
+    //comprado.mostrarEleccion(comprado.cant, comprado.descripcion, comprado.precio, comprado.subtotal);
 }
 
-//Funcion para comprar mostrando la lista de precios general de articulos
-function listaPrecio(pregunta) {
-    let opcion = 0;
-    let cantidad = 0;
-    let cant = 0;
-    while (pregunta === "si") {
-        let guardado = []
-        let guardar = ""
-        for (const articulo of articulos) {
-            guardar = articulo.codigo + " " + articulo.descripcion + " $" + articulo.precio
-            guardado.push(guardar)
-        }
-        alert("Lista de Articulos y codigos(utilice el codigo del principio para completar el carrito):\n" + guardado.join("\n"))
-        opcion = Number(prompt("¿Que articulo necesita?, coloque su codigo"));
-        const existencia = articulos.some(articulos => articulos.codigo === opcion);
-        cantidad = Number(prompt("¿Que cantidad deseas de este producto?"));
-        if (existencia !== false) {
-            if (opcion !== "" && opcion !== 0 && cantidad !== "" && cantidad !== 0) {
-                cant = parseInt(cantidad);
-                let artSeleccionado = articulos.find((el) => el.codigo === opcion);
-                subTotal(artSeleccionado.precio, cant)
-                compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant, subtotal);
-                pregunta = prompt("¿Desea cargar otro articulo? si/no")
+
+
+//contenedor.innerHTML = ``
+
+let elegido = 0;
+let artPrecio = 0;
+let opcion = document.getElementById("articulos")
+opcion.addEventListener("input", () => {
+    console.log(opcion.value)
+    elegido = Number(opcion.value)
+    artSeleccionado = articulos.find((el) => el.codigo === elegido);
+    subTotal(artSeleccionado.precio, cant)
+    console.log(artSeleccionado.precio)
+    //artPrecio = artSeleccionado.precio;
+    let container = document.getElementById("precio")
+    container.innerHTML = `<input type="number" placeholder=  "$ ${artSeleccionado.precio}" name="precio" disabled>`
+})
+
+cant = 0;
+let cantidad = document.getElementById("cantidad")
+cantidad.addEventListener("input", () => {
+    //poner.remove()
+    console.log(Number(cantidad.value))
+    cant = Number(cantidad.value)
+    subTotal(artSeleccionado.precio, cant)
+
+}
+    //
+    //contenedorPoner.innerHTML = 
+    //poner.innerHTML = "Coloque una cantidad"
+    //let padre2 = document.getElementById("totalCarrito25")
+    //padre2.innerHTML = `<h2>Total:  $ ${total}</h2>`;
+
+)
+
+
+
+
+let agregar = document.getElementById("agregarCarrito");
+agregar.addEventListener("click", visualizarCarrito)
+
+
+function visualizarCarrito(e) {
+    //
+    //e.preventDefault();
+
+    console.log(comprados.length)
+    if (cantidad.value !== "" && cant !== 0) {
+        let existe = comprados.some(comprado => comprado.codigo === elegido);
+        console.log(existe)
+        if (existe === false) {
+            compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant, subtotal);
+            e.preventDefault();
+            let poner = document.getElementById("ponerCantidad")
+            //let contenedorPoner = document.createElement("div")
+            poner.innerHTML = `<p> </p>`
+            if (comprados.length === 1) {
+                //poner.innerHTML = ``
+                let padre1 = document.getElementById("tituloCarrito")
+                let contenedor1 = document.createElement("div")
+                contenedor1.innerHTML = `<h2>Carrito de Compras.</h2>
+        <table class="table" border="1" cellpading="20" cellspacing="0">
+                        <tr>
+                            <th>CODIGO</th>
+                            <th>DESCRIPCION</th>
+                            <th>CANTIDAD</th>
+                            <th>PRECIO</th>
+                            <th>SUBTOTAL</th>
+                        </tr>                                                   
+                    </table>`;
+                padre1.appendChild(contenedor1);
+                /*let padre = document.getElementById("verCarrito")
+                let contenedor = document.createElement("div");
+                contenedor.innerHTML = `
+        <table class="table1" border="1" cellpading="20" cellspacing="0">                       
+                        <tr>
+                            <td>${artSeleccionado.codigo}</td>
+                            <td>${artSeleccionado.descripcion}</td>
+                            <td>${cant}</td>
+                            <td> $ ${artSeleccionado.precio}</td>
+                            <td> $ ${subtotal}</td>
+                        </tr>                            
+                    </table>`;
+                padre.appendChild(contenedor);*/
+                verCarrito.innerHTML = ``
+                totalCarrito()
+                console.log(total)
+
+                //let padre2 = document.getElementById("totalCarrito25")
+                //padre2.innerHTML = `<h2>Total:  $ ${total}</h2>`;
+                //opcion.value = `-`
+
             } else {
-                alert("Cargue algun producto o cantidad.")
+                /*let padre = document.getElementById("verCarrito")
+                let contenedor = document.createElement("div");
+                contenedor.innerHTML = `
+        <table class="table1" border="1" cellpading="20" cellspacing="0">                       
+                        <tr>
+                            <td>${artSeleccionado.codigo}</td>
+                            <td>${artSeleccionado.descripcion}</td>
+                            <td>${cant}</td>
+                            <td> $ ${artSeleccionado.precio}</td>
+                            <td> $ ${subtotal}</td>
+                        </tr>                            
+                    </table>`;
+                padre.appendChild(contenedor);*/
+                verCarrito.innerHTML = ``
+                totalCarrito()
+                //let padre2 = document.getElementById("totalCarrito25")
+                //padre2.innerHTML = `<h2>Total:  $ ${total}</h2>`;
+                //opcion.value = `-`
             }
-        }else{
-            alert("No tenemos ese articulo, lo invitamos a ver nuevamente nuestra disponibilidad.")
-            pregunta = "si"
-            listaPrecio(pregunta)
-        }
-    }
-    muestraIntermediaCarro();
-}
-
-//Modificar cantidad de los articulos
-function modificarCantidad() {
-    let modificar = Number(prompt("¿Que articulo desea modificar su cantidad?: "));
-    const existe = comprados.some(comprado => comprado.codigo === modificar);
-    if (existe !== false) {
-        let nuevaCantidad = Number(prompt("¿Que cantidad desea?: "))
-        nuevaCantidad = parseInt(nuevaCantidad)
-        if (nuevaCantidad !== 0) {
-            const artModificar = comprados.find((el) => el.codigo === modificar);
-            artModificar.cant = nuevaCantidad;
-            subTotal(artModificar.precio, nuevaCantidad)
-            artModificar.subtotal = subtotal
-            muestraIntermediaCarro();
         } else {
-            alert("No puso cantidad correcta, por favor indiquelo de nuevo.")
-            modificarCantidad()
-        }
-    } else {
-        alert("Ese articulo no se encuentra en su carro.");
-        eleccion();
-    }
-}
-
-//Funcion para eliminar los articulos del carro
-let borrar = 0;
-function eliminar() {
-    borrar = 0;
-    let elim = Number(prompt("¿Que articulo desea eliminar?: "));
-    const existe = comprados.some(comprado => comprado.codigo === elim);
-    if (existe !== false) {
-        for (const objeto of comprados) {
-            if (objeto.codigo === elim) {
-                borrar = comprados.indexOf(objeto)
+            e.preventDefault();
+            artBuscado = comprados.find((el) => el.codigo === elegido);
+            //console.log(artBuscado)
+            // artBuscado.cant = cant
+            //console.log(comprados)
+            //subTotal(artBuscado.precio, cant)
+            for (const objeto of comprados) {
+                if (objeto.codigo === artBuscado.codigo) {
+                    borrar = comprados.indexOf(objeto)
+                }
             }
+            comprados.splice(borrar, 1)
+            compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant, subtotal);
+            verCarrito.innerHTML = ``
+            totalCarrito()
+
         }
     } else {
-        alert("Ese articulo no se encuentra en su carro.");
+        e.preventDefault();
+        let poner = document.getElementById("ponerCantidad")
+        //let contenedorPoner = document.createElement("div")
+        poner.innerHTML = `<p>Colocar Cantidad</p>`
+        //poner.innerHTML = contenedorPoner;
 
-        eleccion();
     }
-    comprados.splice(borrar, 1)
-    console.log(comprados)
-    muestraIntermediaCarro()
+
+
+    cant = 0;
+    cantidad.value = `0`
+
+    //cantidad.value = `<input type="number" placeholder=  "Cantidad" name="precio" disabled>`
+    let containerSubtotal = document.getElementById("subtotal")
+    containerSubtotal.innerHTML = `<input type="number" placeholder=  "Subtotal" name="precio" disabled>`
+    subtotal = 0;
 }
-
-
-
-
-
-
-////////////////////////////////////////////Funcion de arranque.    
-function principio() {
-    let pregunta = (prompt("Desea cargar algun articulo al carrito? si/no")).toLowerCase();
-    if (pregunta === "si") {
-        listaPrecio(pregunta);
-    } else {
-        alert("Lo invitamos a ver nuestro catalogo, quiza encuentre algo de su interes.");
-    }
-}
-
-
-
-
-
-//////////////////////////////////////////////////Inicio del programa.
-principio();
-
 
 
 
