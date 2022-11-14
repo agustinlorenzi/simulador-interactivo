@@ -42,37 +42,54 @@ let iconoEliminar = `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi
   </svg>`;
 
 let total = 0;
+let posicionArticulo = 0;
 function totalCarrito() {
+    //let padre1 = document.getElementById("tituloCarrito")
+    //padre1.innerHTML = ``
+    verCarrito.innerHTML = ``
     total = 0;
-    
+    posicionArticulo = 0
+    if (comprados.length !== 0) {
+        for (const articulo of comprados) {
 
-    for (const articulo of comprados) {
+            total = total + articulo.precio * articulo.cant;
 
-        total = total + articulo.precio * articulo.cant;
-        
 
-        let padre = document.getElementById("verCarrito")
-        let contenedor = document.createElement("div");
-        contenedor.innerHTML = `
+            let padre = document.getElementById("verCarrito")
+            let contenedor = document.createElement("div");
+            contenedor.innerHTML = `
         <table class="table1" border="1" cellpading="20" cellspacing="0">                       
                         <tr>
-                            <td>${articulo.codigo}</td>
+                            <td>${articulo.codigo}</td>                            
                             <td>${articulo.descripcion}</td>
                             <td>${articulo.cant}</td>
                             <td> $ ${articulo.precio}</td>
                             <td> $ ${articulo.subtotal}</td>
-                            <td><span onclick="eliminarItem(${indice})">${iconoEliminar}</span></td>
+                            <td><button onclick="eliminar(${posicionArticulo})">${iconoEliminar}</button></td>
+                            
                         </tr>                            
                     </table>`;
-        padre.appendChild(contenedor);
+            padre.appendChild(contenedor);
+            posicionArticulo = posicionArticulo + 1;
+        }
+    } else {
+
+        let padre1 = document.getElementById("tituloCarrito")
+        padre1.innerHTML = ``
+        verCarrito.innerHTML = ``
+
     }
+    opcion.value = `-`
     let padre2 = document.getElementById("totalCarrito25")
     padre2.innerHTML = `<h2>Total:  $ ${total}</h2>`;
-    opcion.value = `-`
-
 }
 
 
+function eliminar(posicion) {
+    comprados.splice(posicion, 1)
+    console.log(comprados)
+    totalCarrito()
+}
 
 
 
@@ -108,16 +125,18 @@ let opcion = document.getElementById("articulos")
 opcion.addEventListener("input", () => {
     console.log(opcion.value)
     elegido = Number(opcion.value)
-    ponerPrecio(elegido)
-    
+    console.log(elegido + 1)
+    indicarArticulo(elegido)
+
 })
 
 /*let indicar = document.getElementById();
 indicar.addEventListener("click", indicarArticulo)
 console.log(indicar)*/
 
+//let numArt = 0;
 
-function indicarArticulo(numArt){
+function indicarArticulo(numArt) {
     console.log(numArt)
     artSeleccionado = articulos.find((el) => el.codigo === numArt);
     subTotal(artSeleccionado.precio, cant)
@@ -125,11 +144,11 @@ function indicarArticulo(numArt){
     opcion.value = numArt
     //artPrecio = artSeleccionado.precio;
     let precio = artSeleccionado.precio
-    ponerPrecio(precio)   
+    ponerPrecio(precio)
 }
 
 
-function ponerPrecio(precio){    
+function ponerPrecio(precio) {
     let container = document.getElementById("precio")
     container.innerHTML = `<input type="number" placeholder=  "$ ${precio}" name="precio" disabled>`
 }
@@ -184,6 +203,7 @@ function visualizarCarrito(e) {
                             <th>CANTIDAD</th>
                             <th>PRECIO</th>
                             <th>SUBTOTAL</th>
+                            <th></th>
                         </tr>                                                   
                     </table>`;
                 padre1.appendChild(contenedor1);
