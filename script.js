@@ -51,10 +51,7 @@ function totalCarrito() {
     posicionArticulo = 0
     if (comprados.length !== 0) {
         for (const articulo of comprados) {
-
             total = total + articulo.precio * articulo.cant;
-
-
             let padre = document.getElementById("verCarrito")
             let contenedor = document.createElement("div");
             contenedor.innerHTML = `
@@ -65,19 +62,18 @@ function totalCarrito() {
                             <td>${articulo.cant}</td>
                             <td> $ ${articulo.precio}</td>
                             <td> $ ${articulo.subtotal}</td>
-                            <td><button onclick="eliminar(${posicionArticulo})">${iconoEliminar}</button></td>
-                            
+                            <td><button onclick="eliminar(${posicionArticulo})">${iconoEliminar}</button></td>                            
                         </tr>                            
                     </table>`;
             padre.appendChild(contenedor);
+            console.log("posicion " + posicionArticulo)
             posicionArticulo = posicionArticulo + 1;
+            console.log("posicion " + posicionArticulo)
         }
     } else {
-
         let padre1 = document.getElementById("tituloCarrito")
         padre1.innerHTML = ``
         verCarrito.innerHTML = ``
-
     }
     opcion.value = `-`
     let padre2 = document.getElementById("totalCarrito25")
@@ -116,60 +112,33 @@ function compra(codigo, descripcion, precio, cant, subtotal) {
 }
 
 
-
-//contenedor.innerHTML = ``
+//COMIENZO
 
 let elegido = 0;
-let artPrecio = 0;
 let opcion = document.getElementById("articulos")
-opcion.addEventListener("input", () => {
-    console.log(opcion.value)
-    elegido = Number(opcion.value)
-    console.log(elegido + 1)
+opcion.addEventListener("input", () => {    
+    elegido = Number(opcion.value)    
     indicarArticulo(elegido)
-
 })
 
-/*let indicar = document.getElementById();
-indicar.addEventListener("click", indicarArticulo)
-console.log(indicar)*/
-
-//let numArt = 0;
-
-function indicarArticulo(numArt) {
-    console.log(numArt)
-    artSeleccionado = articulos.find((el) => el.codigo === numArt);
-    subTotal(artSeleccionado.precio, cant)
-    console.log(artSeleccionado)
-    opcion.value = numArt
-    //artPrecio = artSeleccionado.precio;
-    let precio = artSeleccionado.precio
-    ponerPrecio(precio)
-}
-
-
-function ponerPrecio(precio) {
-    let container = document.getElementById("precio")
-    container.innerHTML = `<input type="number" placeholder=  "$ ${precio}" name="precio" disabled>`
-}
 
 cant = 0;
 let cantidad = document.getElementById("cantidad")
-cantidad.addEventListener("input", () => {
-    //poner.remove()
-    console.log(Number(cantidad.value))
+cantidad.addEventListener("input", () => {    
     cant = Number(cantidad.value)
     subTotal(artSeleccionado.precio, cant)
+})
 
+
+let numeroArticulo = 0
+function indicarArticulo(numArt) {  
+    opcion.value = numArt
+    numeroArticulo = numArt
+    artSeleccionado = articulos.find((el) => el.codigo === numArt);
+    let container = document.getElementById("precio")
+    container.innerHTML = `<input type="number" placeholder=  "$ ${artSeleccionado.precio}" name="precio" disabled>`
+    subTotal(artSeleccionado.precio, cant)       
 }
-    //
-    //contenedorPoner.innerHTML = 
-    //poner.innerHTML = "Coloque una cantidad"
-    //let padre2 = document.getElementById("totalCarrito25")
-    //padre2.innerHTML = `<h2>Total:  $ ${total}</h2>`;
-
-)
-
 
 
 
@@ -177,22 +146,16 @@ let agregar = document.getElementById("agregarCarrito");
 agregar.addEventListener("click", visualizarCarrito)
 
 
-function visualizarCarrito(e) {
-    //
-    //e.preventDefault();
-
-    console.log(comprados.length)
-    if (cantidad.value !== "" && cant !== 0) {
-        let existe = comprados.some(comprado => comprado.codigo === elegido);
+function visualizarCarrito(e) {     
+    if (cantidad.value !== "" && cant > 0) {
+        let existe = comprados.some(comprado => comprado.codigo === numeroArticulo);
         console.log(existe)
         if (existe === false) {
             compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant, subtotal);
             e.preventDefault();
-            let poner = document.getElementById("ponerCantidad")
-            //let contenedorPoner = document.createElement("div")
+            let poner = document.getElementById("ponerCantidad")            
             poner.innerHTML = `<p> </p>`
-            if (comprados.length === 1) {
-                //poner.innerHTML = ``
+            if (comprados.length === 1) {                
                 let padre1 = document.getElementById("tituloCarrito")
                 let contenedor1 = document.createElement("div")
                 contenedor1.innerHTML = `<h2>Carrito de Compras.</h2>
@@ -264,7 +227,6 @@ function visualizarCarrito(e) {
             compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant, subtotal);
             verCarrito.innerHTML = ``
             totalCarrito()
-
         }
     } else {
         e.preventDefault();
@@ -274,11 +236,8 @@ function visualizarCarrito(e) {
         //poner.innerHTML = contenedorPoner;
 
     }
-
-
     cant = 0;
-    cantidad.value = `0`
-
+    cantidad.value = `0`    
     //cantidad.value = `<input type="number" placeholder=  "Cantidad" name="precio" disabled>`
     let containerSubtotal = document.getElementById("subtotal")
     containerSubtotal.innerHTML = `<input type="number" placeholder=  "Subtotal" name="precio" disabled>`
