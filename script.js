@@ -2,29 +2,64 @@
 
 //Clase constructora de los objetos articulos
 class Articulo {
-    constructor(codigo, descripcion, precio) {
+    constructor(codigo, descripcion, precio, imagen) {
         this.codigo = Number(codigo);
         this.descripcion = descripcion;
         this.precio = Number(precio);
+        this.imagen = imagen;
     }
 }
 
 //datos de los objetos articulos
-const articulo1 = new Articulo(1, "Crema Hidratante para Manos", 500);
-const articulo2 = new Articulo(2, "Oro Liquido sin Formol", 350);
-const articulo3 = new Articulo(3, "Tratamiento a base de aceites 80 ml", 475);
-const articulo4 = new Articulo(4, "Kit Antifrizz: 1 Shampoo, 1 Antifrizz y 1 Nutrición", 1050);
-const articulo5 = new Articulo(5, "Manteca Desmaquillante", 735);
-const articulo6 = new Articulo(6, "Exfoliante de Labios + Bálsamo Hidratante", 1528);
-const articulo7 = new Articulo(7, "Contorno de Ojos con Cafeína y Q10", 875);
-const articulo8 = new Articulo(8, "Mascarilla Capilar", 983);
-const articulo9 = new Articulo(9, "Balsamo de Karité, cacao, almendras, vitamina Hidratante", 759);
-const articulo10 = new Articulo(10, "Fragancia Natural", 253);
-const articulo11 = new Articulo(11, "Mascarilla Esfoliante Facial", 899);
-const articulo12 = new Articulo(12, "Exfoliante de Labios", 423);
+const articulo1 = new Articulo(1, "Crema Hidratante para Manos", 500, "./img/producto1.jpg");
+const articulo2 = new Articulo(2, "Oro Liquido sin Formol", 350, "./img/producto2.jpg");
+const articulo3 = new Articulo(3, "Tratamiento a base de aceites 80 ml", 475, "./img/producto3.jpg");
+const articulo4 = new Articulo(4, "Kit Antifrizz: 1 Shampoo, 1 Antifrizz y 1 Nutrición", 1050, "./img/producto4.jpg");
+const articulo5 = new Articulo(5, "Manteca Desmaquillante", 735, "./img/producto5.jpg");
+const articulo6 = new Articulo(6, "Exfoliante de Labios + Bálsamo Hidratante", 1528, "./img/producto6.jpg");
+const articulo7 = new Articulo(7, "Contorno de Ojos con Cafeína y Q10", 875, "./img/producto7.jpg");
+const articulo8 = new Articulo(8, "Mascarilla Capilar", 983, "./img/producto8.jpg");
+const articulo9 = new Articulo(9, "Balsamo de Karité, cacao, almendras, vitamina Hidratante", 759, "./img/producto9.jpg");
+const articulo10 = new Articulo(10, "Fragancia Natural", 253, "./img/producto10.jpg");
+const articulo11 = new Articulo(11, "Mascarilla Esfoliante Facial", 899, "./img/producto11.jpg");
+const articulo12 = new Articulo(12, "Exfoliante de Labios", 423, "./img/producto12.jpg");
 
 //array que contiene todo el listado de articulos
 const articulos = [articulo1, articulo2, articulo3, articulo4, articulo5, articulo6, articulo7, articulo8, articulo9, articulo10, articulo11, articulo12]
+
+
+articulos.forEach((art) => {
+    let content = document.getElementById("vidriera")
+    let content1 = document.createElement("div")
+    
+    //content.className = "card"    
+    content1.innerHTML = `
+    <div class="card mt-3 mb-3" style="width: 18rem;">
+    <img src="${art.imagen}">  class="card-img-top" alt="articulo(${art.codigo})">
+                  <div class="card-body text-dark bg-secondary bg-opacity-25">                    
+                      <p class="card-title text-center fs-5 fw-bold">${art.descripcion}</p>
+                      <p class="card-text">$${art.precio}</p>
+                      <a href="#pedir"><button class="btn btn-primary" onclick="indicarArticulo(${art.codigo})">Agregar</button></a>
+                  </div>
+              </div> `;
+    content.append(content1);
+
+})
+
+/*let padre1 = document.getElementById("tituloCarrito")
+        let contenedor1 = document.createElement("div")
+        contenedor1.innerHTML = `<h2>Carrito de Compras.</h2>
+<table class="table" border="1" cellpading="20" cellspacing="0">
+                <tr>
+                    <th>CODIGO</th>
+                    <th>DESCRIPCION</th>
+                    <th>CANTIDAD</th>
+                    <th>PRECIO</th>
+                    <th>SUBTOTAL</th>
+                    <th></th>
+                </tr>                                                   
+            </table>`;
+        padre1.appendChild(contenedor1);*/
 
 //subtotal.
 let subtotal = 0;
@@ -48,7 +83,7 @@ let iconoEliminar = `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi
 let total = 0;
 function totalCarrito() {
     verCarrito.innerHTML = ``
-    total = 0;    
+    total = 0;
     if (comprados.length !== 0) {
         agregarArticulos()
         let padre2 = document.getElementById("totalCarrito25")
@@ -60,12 +95,12 @@ function totalCarrito() {
         let padre2 = document.getElementById("totalCarrito25")
         padre2.innerHTML = ``;
     }
-    opcion.value = `-`    
+    opcion.value = `-`
 }
 
 
 //arma el encabezado de la tablita
-function encabezadoTablita(){
+function encabezadoTablita() {
     if (comprados.length === 1) {
         let padre1 = document.getElementById("tituloCarrito")
         let contenedor1 = document.createElement("div")
@@ -92,7 +127,7 @@ function encabezadoTablita(){
 
 //agrega los articulos en el carro.
 let posicionArticulo = 0;
-function agregarArticulos(){
+function agregarArticulos() {
     posicionArticulo = 0
     for (const articulo of comprados) {
         total = total + articulo.precio * articulo.cant;
@@ -222,7 +257,7 @@ function visualizarCarrito(e) {
     cantidad.value = `0`
     let containerSubtotal = document.getElementById("subtotal")
     containerSubtotal.innerHTML = `<input type="number" placeholder=  "Subtotal" name="precio" disabled>`
-    subtotal = 0;    
+    subtotal = 0;
 }
 
 
