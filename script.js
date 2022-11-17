@@ -31,43 +31,30 @@ const articulos = [articulo1, articulo2, articulo3, articulo4, articulo5, articu
 articulos.forEach((art) => {
     let content = document.getElementById("vidriera")
     let content1 = document.createElement("div")
-    
-    //content.className = "card"    
     content1.innerHTML = `
     <div class="card mt-3 mb-3" style="width: 18rem;">
     <img src="${art.imagen}">  class="card-img-top" alt="articulo(${art.codigo})">
                   <div class="card-body text-dark bg-secondary bg-opacity-25">                    
                       <p class="card-title text-center fs-5 fw-bold">${art.descripcion}</p>
-                      <p class="card-text">$${art.precio}</p>
+                      <p class="card-text">$${art.precio}</p>  
+                      <input id="${art.codigo}" type="number" min="1" placeholder="Cantidad" name="cantidad">               
                       <a href="#pedir"><button class="btn btn-primary" onclick="indicarArticulo(${art.codigo})">Agregar</button></a>
                   </div>
               </div> `;
     content.append(content1);
 
+
+
 })
 
-/*let padre1 = document.getElementById("tituloCarrito")
-        let contenedor1 = document.createElement("div")
-        contenedor1.innerHTML = `<h2>Carrito de Compras.</h2>
-<table class="table" border="1" cellpading="20" cellspacing="0">
-                <tr>
-                    <th>CODIGO</th>
-                    <th>DESCRIPCION</th>
-                    <th>CANTIDAD</th>
-                    <th>PRECIO</th>
-                    <th>SUBTOTAL</th>
-                    <th></th>
-                </tr>                                                   
-            </table>`;
-        padre1.appendChild(contenedor1);*/
+
+
 
 //subtotal.
 let subtotal = 0;
 function subTotal(precio, cant) {
     subtotal = 0;
-    subtotal = precio * cant;
-    let containerSubtotal = document.getElementById("subtotal")
-    containerSubtotal.innerHTML = `<input type="number" placeholder=  "$ ${subtotal}" name="precio" disabled>`
+    subtotal = precio * cant;    
 }
 
 
@@ -95,7 +82,7 @@ function totalCarrito() {
         let padre2 = document.getElementById("totalCarrito25")
         padre2.innerHTML = ``;
     }
-    opcion.value = `-`
+    //opcion.value = `-`
 }
 
 
@@ -115,7 +102,7 @@ function encabezadoTablita() {
                     <th></th>
                 </tr>                                                   
             </table>`;
-        padre1.appendChild(contenedor1);
+        padre1.append(contenedor1);
         verCarrito.innerHTML = ``
         totalCarrito()
     } else {
@@ -149,6 +136,7 @@ function agregarArticulos() {
         posicionArticulo = posicionArticulo + 1;
         console.log("posicion " + posicionArticulo)
     }
+    cant = 0;
 }
 
 
@@ -183,42 +171,24 @@ function compra(codigo, descripcion, precio, cant, subtotal) {
 
 
 
-//COMIENZO DEL CIRCUITO EN EL PROGRAMA MEDIANTE EL DESPLEGABLE
-let elegido = 0;
-let opcion = document.getElementById("articulos")
-opcion.addEventListener("input", () => {
-    elegido = Number(opcion.value)
-    indicarArticulo(elegido)
-})
-
-
-//escucha el input donde se coloca la cantidad solicitada de cada articulo.
-cant = 0;
-let cantidad = document.getElementById("cantidad")
-cantidad.addEventListener("input", () => {
-    cant = Number(cantidad.value)
-    subTotal(artSeleccionado.precio, cant)
-})
 
 
 
 //a esta funcion se la llama ya sea que el usuario comience por el desplegable, o la llame directamente presionando
 //los botones de agregar.
-let numeroArticulo = 0 //se unifica elegido o el numero que manda el onclick para luego continuar el camino,
-//independientemente de la via de comienzo de la accion de compra que el usuario haya usado.
-function indicarArticulo(numArt) {
-    opcion.value = numArt
-    numeroArticulo = numArt
-    artSeleccionado = articulos.find((el) => el.codigo === numArt);
-    let container = document.getElementById("precio")
-    container.innerHTML = `<input type="number" placeholder=  "$ ${artSeleccionado.precio}" name="precio" disabled>`
-    subTotal(artSeleccionado.precio, cant)
+let cant = 0;
+function indicarArticulo(numArt) {    
+    //console.log("la funcion indicar esta siendo llamada " + numArt)
+    let stringId = numArt.toString();
+    let cantidad = document.getElementById(stringId)
+    cantidad.addEventListener("input", () => {
+        cant = Number(cantidad.value)
+        //console.log("esto es numart " + (numArt + 1))
+        //console.log("la cantidad puesta es: " + (cant+1))
+        visualizarCarrito(numArt)        
+    })       
 }
 
-
-//escucha el llamado de agregar al carrito
-let agregar = document.getElementById("agregarCarrito");
-agregar.addEventListener("click", visualizarCarrito)
 
 
 //comienza a conformar el carrito. 
@@ -226,18 +196,21 @@ agregar.addEventListener("click", visualizarCarrito)
 //si no tiene ningun articulo, llama a que se haga la estructura inicial de la tabla.
 //si tiene articulos y alguno existe, le pisa la cantidad. sino existe solicita que en la funcion total se lo agregue.
 //reinicia todos los input para que esten listos para la carga de otro articulo.
-function visualizarCarrito(e) {
-    if (cantidad.value !== "" && cant > 0 && opcion.value !== `-`) {
-        let existe = comprados.some(comprado => comprado.codigo === numeroArticulo);
+function visualizarCarrito(numArt) {
+    artSeleccionado = articulos.find((el) => el.codigo === numArt);
+    subTotal(artSeleccionado.precio, cant)
+    if (cant > 0) {
+        let existe = comprados.some(comprado => comprado.codigo === numArt);
         if (existe === false) {
             compra(artSeleccionado.codigo, artSeleccionado.descripcion, artSeleccionado.precio, cant, subtotal);
-            e.preventDefault();
+            //e.preventDefault();
             let poner = document.getElementById("ponerCantidad")
             poner.innerHTML = `<p> </p>`
+
             encabezadoTablita()
         } else {
-            e.preventDefault();
-            artBuscado = comprados.find((el) => el.codigo === numeroArticulo);
+            //e.preventDefault();
+            artBuscado = comprados.find((el) => el.codigo === numArt);
             for (const objeto of comprados) {
                 if (objeto.codigo === artBuscado.codigo) {
                     borrar = comprados.indexOf(objeto)
@@ -249,14 +222,14 @@ function visualizarCarrito(e) {
             totalCarrito()
         }
     } else {
-        e.preventDefault();
+        //e.preventDefault();
         let poner = document.getElementById("ponerCantidad")
         poner.innerHTML = `<p>Indicar Articulo o Cantidad correctamente.</p>`
     }
-    cant = 0;
-    cantidad.value = `0`
-    let containerSubtotal = document.getElementById("subtotal")
-    containerSubtotal.innerHTML = `<input type="number" placeholder=  "Subtotal" name="precio" disabled>`
+    //cant = 0;
+   // cantidad.value = `0`
+    //let containerSubtotal = document.getElementById("subtotal")
+    //containerSubtotal.innerHTML = `<input type="number" placeholder=  "Subtotal" name="precio" disabled>`
     subtotal = 0;
 }
 
