@@ -15,7 +15,7 @@ const articulo4 = new Articulo(4, "Kit Antifrizz: 1 Shampoo, 1 Antifrizz y 1 Nut
 const articulo5 = new Articulo(5, "Manteca Desmaquillante                                  ", 735, "./img/producto5.jpg");
 const articulo6 = new Articulo(6, "Exfoliante de Labios + Bálsamo Hidratante               ", 1528, "./img/producto6.jpg");
 const articulo7 = new Articulo(7, "Contorno de Ojos con Cafeína y Q10                      ", 875, "./img/producto7.jpg");
-const articulo8 = new Articulo(8, "Mascarilla Capilar                                      ", 983,"./img/producto8.jpg");
+const articulo8 = new Articulo(8, "Mascarilla Capilar                                      ", 983, "./img/producto8.jpg");
 const articulo9 = new Articulo(9, "Balsamo de Karité, cacao, almendras, vitamina Hidratante", 759, "./img/producto9.jpg");
 const articulo10 = new Articulo(10, "Fragancia Natural                                       ", 253, "./img/producto10.jpg");
 const articulo11 = new Articulo(11, "Mascarilla Esfoliante Facial                            ", 899, "./img/producto11.jpg");
@@ -32,9 +32,18 @@ articulos.forEach((art) => {
     <img src="${art.imagen}">  class="card-img-top" alt="articulo(${art.codigo})">
                   <div class="card-body text-dark bg-secondary bg-opacity-25">                    
                       <p class="card-title text-center fs-5 fw-bold">${art.descripcion}</p>                      
-                      <p class="card-text">$${art.precio}</p> 
-                      <a href="#pedir"><button class="btn btn-primary" onclick="indicarArticulo(${art.codigo})">Habilitar Carga</button></a>
-                      <input id="${art.codigo}" type="number" min="0" placeholder="Cantidad" name="cantidad"></input>  
+                      <p class="card-text">$${art.precio}</p>
+                      <div class="botonesDisplay">
+                      <button class="btn btn-primary" onclick="Sacar(${art.codigo})">-</button>
+                      <br>
+                      <div id="${art.codigo}">                      
+                      <input class="display" type="text" min="0" placeholder="Cantidad" name="cantidad" disabled></input>
+                      </div>
+                      <br>                      
+                      <button class="btn btn-primary" onclick="Agregar(${art.codigo})">+</button>
+                      </div>
+                      <br>
+                      <a href="#finalPagina"><button class="btn btn-primary" onclick="visualizarCarrito(${art.codigo})">Agregar Carrito</button></a>                        
                       </div>   
                       
 
@@ -229,13 +238,13 @@ content.append(content1);*/
 
 
 //cant = 0;
-let cantidade = document.getElementById("1")
+/*let cantidade = document.getElementById("1")
 cantidade.addEventListener("input", () => {
     let cant25 = Number(cantidade.value)
     console.log(cant25)
     console.log("ver numero " + (cant25 + 1))
     //subTotal(artSeleccionado.precio, cant)
-})
+})*/
 
 
 
@@ -244,7 +253,7 @@ let cant = 0;
     const input = document.querySelector(`#${numArt}`);
     console.log(input.value);
 }*/
-function indicarArticulo(numArt) {
+/*function indicarArticulo(numArt) {
     //<input id="${art.codigo}" type="number" min="1" placeholder="Cantidad" name="cantidad"></input>
     let stringId = numArt.toString();
     //let containerSubtotal = document.getElementById(stringId)
@@ -258,9 +267,25 @@ function indicarArticulo(numArt) {
         console.log("la cantidad puesta es: " + (cant + 1))
         visualizarCarrito(numArt)
     })
+}*/
+
+function Agregar(numArt) {
+
+    cant = cant + 1;
+    let stringId = numArt.toString();
+    let container = document.getElementById(stringId)
+    container.innerHTML = `<input class="display" type="text" placeholder=  "${cant}" name="Cantidad" disabled>`
+
 }
 
-
+function Sacar(numArt) {
+    if (cant > 0) {
+        cant = cant - 1;
+        let stringId = numArt.toString();
+        let container = document.getElementById(stringId)
+        container.innerHTML = `<input class="display" type="text" placeholder=  "${cant}" name="Cantidad" disabled>`
+    }
+}
 
 
 //escucha el llamado de agregar al carrito
@@ -274,6 +299,9 @@ agregar.addEventListener("click", visualizarCarrito)*/
 //si tiene articulos y alguno existe, le pisa la cantidad. sino existe solicita que en la funcion total se lo agregue.
 //reinicia todos los input para que esten listos para la carga de otro articulo.
 function visualizarCarrito(numArt) {
+    let stringId = numArt.toString();
+    let container = document.getElementById(stringId)
+    container.innerHTML = `<input class="display" type="number" placeholder=  "${"Cantidad"}" name="Cantidad" disabled>`
     /*if (cantidad.value !== "" && cant > 0 && opcion.value !== `-`) {
         let existe = comprados.some(comprado => comprado.codigo === numeroArticulo);
 function visualizarCarrito(numArt) {*/

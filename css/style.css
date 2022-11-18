@@ -258,8 +258,18 @@ h3 {
 }
 
 
+.botonesDisplay{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
-
+.display{
+    width: 100px;
+    height: 50px;
+    margin: 0 10px 0 10px;
+    text-align: center;
+}
 
 /* medias query */
 
