@@ -20,11 +20,15 @@ const articulo9 = new Articulo(9, "Balsamo de Karité, cacao, almendras, vitamin
 const articulo10 = new Articulo(10, "Fragancia Natural                                       ", 253, "./img/producto10.jpg");
 const articulo11 = new Articulo(11, "Mascarilla Esfoliante Facial                            ", 899, "./img/producto11.jpg");
 const articulo12 = new Articulo(12, "Exfoliante de Labios                                    ", 423, "./img/producto12.jpg");
+
+
 //array que contiene todo el listado de articulos
 const articulos = [articulo1, articulo2, articulo3, articulo4, articulo5, articulo6, articulo7, articulo8, articulo9, articulo10, articulo11, articulo12]
+
+
 articulos.forEach((art) => {
     let content = document.getElementById("vidriera")
-    let content1 = document.createElement("div")       
+    let content1 = document.createElement("div")
     content1.innerHTML = `
     <div class="card mt-3 mb-3" style="width: 18rem;">
     <img src="${art.imagen}">  class="card-img-top" alt="articulo(${art.codigo})">
@@ -73,8 +77,10 @@ function totalCarrito() {
         agregarArticulos()
         let padre2 = document.getElementById("totalCarrito25")
         padre2.innerHTML = `<h2>Total:  $ ${total}</h2>`;
+        let padre3 = document.getElementById("confirmarCompra")
+        padre3.innerHTML = `<button class="btn btn-primary" onclick="confirmarCarrito()">Confirmar Carro</button>`;
     } else {
-        let padre1 = document.getElementById("tituloCarrito")
+        let padre1 = document.getElementById("verCarrito")
         padre1.innerHTML = ``
         verCarrito.innerHTML = ``
         let padre2 = document.getElementById("totalCarrito25")
@@ -84,8 +90,10 @@ function totalCarrito() {
 
 
 //arma el encabezado de la tablita
+let tituloCarro = 0;
 function encabezadoTablita() {
-    if (comprados.length === 1) {
+    verCarrito.innerHTML = ``
+    if (tituloCarro === 0 && comprados.length > 0) {
         let padre1 = document.getElementById("tituloCarrito")
         let contenedor1 = document.createElement("div")
         contenedor1.innerHTML = `<h2>Carrito de Compras.</h2>
@@ -102,21 +110,38 @@ function encabezadoTablita() {
         padre1.append(contenedor1);
         verCarrito.innerHTML = ``
         totalCarrito()
-    } else {
+        tituloCarro = 1;
+    } else if (comprados.length > 0) {
+        //let padre1 = document.getElementById("tituloCarrito")
+        //padre1.innerHTML = ``
         verCarrito.innerHTML = ``
         totalCarrito()
+        //let padre3 = document.getElementById("confirmarCompra")
+        //confirmarCompra.innerHTML = ``
+    } else {
+        let padre1 = document.getElementById("tituloCarrito")
+        padre1.innerHTML = ``
+        verCarrito.innerHTML = ``
+        let padre3 = document.getElementById("confirmarCompra")
+        padre3.innerHTML = ``;
+        agregarArticulos()
+
     }
 }
+
+
 
 //agrega los articulos en el carro.
 let posicionArticulo = 0;
 function agregarArticulos() {
     posicionArticulo = 0
+    localStorage.clear()
+    const guardarLocalStorage = (clave, valor) => { localStorage.setItem(clave, valor) };
     for (const articulo of comprados) {
         total = total + articulo.precio * articulo.cant;
         let padre = document.getElementById("verCarrito")
-        let contenedor = document.createElement("div");
-        contenedor.innerHTML = `
+        let contenedorAgregar = document.createElement("div");
+        contenedorAgregar.innerHTML = `
     <table class="table1" border="1" cellpading="20" cellspacing="0">                       
                     <tr>
                         <td>${articulo.codigo}</td>                            
@@ -126,23 +151,46 @@ function agregarArticulos() {
                         <td> $ ${articulo.subtotal}</td>
                         <td><span onclick="eliminar(${posicionArticulo})">${iconoEliminar}</span></td>                            
                     </tr>                            
-                </table>`;
-        padre.append(contenedor);
-        console.log("posicion " + posicionArticulo)
+                </table>      
+                `;
+        padre.append(contenedorAgregar);
         posicionArticulo = posicionArticulo + 1;
-        console.log("posicion " + posicionArticulo)
+        //guardarLocalStorage(articulo.codigo, JSON.stringify(comprados));
+        guardarLocalStorage("productosComprados", JSON.stringify(comprados));
+        //console.log("este es " + guardarLocalStorage)
     }
     cant = 0;
 }
 
+
+
+
+//Almacenar producto por producto
+//for (const producto of productos) {
+//guardarLocal(producto.id, JSON.stringify(producto));
+//}
 
 //elimina los articulos comprados, se la llama desde el simbolo de tachito que acompaña a cada articulo en el carro.
 function eliminar(posicion) {
     comprados.splice(posicion, 1)
     console.log(comprados)
     totalCarrito()
+    encabezadoTablita()
+
+
 }
 
+function confirmarCarrito() {
+    comprados.length = 0
+    localStorage.clear()
+    let padre = document.getElementById("verCarrito")
+    padre.innerHTML = ``
+    let padre1 = document.getElementById("tituloCarrito")
+    padre1.innerHTML = ``
+    verCarrito.innerHTML = `Se borro el Local Storage`
+    let padre2 = document.getElementById("totalCarrito25")
+    padre2.innerHTML = ``;
+}
 
 // constructor articulos comprados
 class Comprado {
@@ -163,6 +211,48 @@ function compra(codigo, descripcion, precio, cant, subtotal) {
     comprados.push(comprado);
 }
 
+//const guardados = JSON.parse(localStorage.getItem("productosComprados"));
+//comprados = [];
+//Iteramos almacenados con for...of para transformar todos sus objetos a tipo producto.
+/*for (let i = 0; i < localStorage.length; i++){
+    let articuloGuardado = localStorage.getItem(i);
+    comprados.push(new Comprado(articuloGuardado));
+}
+totalCarrito()
+//agregarArticulos()
+console.log(comprados)
+//Ahora tenemos objetos productos y podemos usar sus métodos*/
+
+//console.log("esto es comprados " + (comprados))
+class Comprado1 {
+    constructor(obj) {
+        this.codigo = parseFloat(obj.codigo);
+        this.descripcion = obj.descripcion;
+        this.precio = parseFloat(obj.precio);
+        this.cant = parseFloat(obj.cant);
+        this.subtotal = parseFloat(obj.subtotal);
+    }
+}
+
+//for (let i = 0; i > 0; i++) {
+let renovar = 0
+function renovarCarrito() {
+    if (renovar === 0) {
+        console.log("funcion llamada")
+        guardados = JSON.parse(localStorage.getItem("productosComprados"));
+        console.log("esto es almacenados " + guardados)
+        //const comprados1 = [];
+        //Iteramos almacenados con for...of para transformar todos sus objetos a tipo producto.
+        for (const objeto of guardados) {
+            comprados.push(new Comprado1(objeto));
+        }
+        console.log(comprados)
+        encabezadoTablita()
+        renovar = 1
+    }
+    //agregarArticulos()
+
+}
 
 let cant = 0;
 function Agregar(numArt) {
@@ -184,11 +274,12 @@ function Sacar(numArt) {
 
 
 function visualizarCarrito(numArt) {
+    renovar = 1
     let stringId = numArt.toString();
     let container = document.getElementById(stringId)
     container.innerHTML = `<input class="display" type="number" placeholder=  "${"Cantidad"}" name="Cantidad" disabled>`
     artSeleccionado = articulos.find((el) => el.codigo === numArt);
-    //subTotal(artSeleccionado.precio, cant)
+    subTotal(artSeleccionado.precio, cant)
     if (cant > 0) {
         let existe = comprados.some(comprado => comprado.codigo === numArt);
         if (existe === false) {
@@ -216,6 +307,7 @@ function visualizarCarrito(numArt) {
     cant = 0;
     subtotal = 0;
 }
+
 
 
 
