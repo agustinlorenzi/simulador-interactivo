@@ -241,7 +241,7 @@ h3 {
 
 
 /* CLASES DE LA TABLA DEL CARRITO DE COMPRAS */
-  
+
 
 
 .table tr th {
@@ -258,17 +258,37 @@ h3 {
 }
 
 
-.botonesDisplay{
+.botonesDisplay {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.display{
+.display {
     width: 100px;
     height: 50px;
     margin: 0 10px 0 10px;
     text-align: center;
+}
+
+.frase{
+    color: black;
+    text-align: center;
+    justify-content: center;
+    background-color: beige;
+    width: 80vw;
+    display: flex;
+    margin: 0;
+    padding: 20px;
+    
+}
+
+.frase1{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    
 }
 
 /* medias query */
@@ -383,7 +403,7 @@ h3 {
     }
 
     .label-input {
-        width: 30vw;        
+        width: 30vw;
     }
 
     .formulario form button {

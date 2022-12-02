@@ -11,6 +11,7 @@
     <!-- este es nuestro css -->
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="./img/icono-para-barra.jpg">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
 <body>
@@ -51,10 +52,11 @@
                             </form>
                         </li>
                         <li>
-                            <a href="#finalPagina"><button onclick="renovarCarrito()"><img class="carrito" src="./img/carrito-de-compras (3).png" alt=""></button></a>
+                            <a href="#finalPagina"><button onclick="renovarCarrito()"><img class="carrito"
+                                        src="./img/carrito-de-compras (3).png" alt=""></button></a>
                         </li>
                         <!-- <img class="carrito" src="./img/carrito-de-compras (3).png" alt="">-->
-                                    
+
                     </ul>
                 </div>
             </div>
@@ -62,20 +64,35 @@
     </header>
     <main class="main text-bg-secondary p-3">
 
+        <div class="frase1" id="fetch">
+            
+        </div>
+
 
         <h1 id="tituloUno" class="text-center">PRODUCTOS</h1>
 
         <div class="d-flex flex-wrap justify-content-around" id="vidriera"></div>
 
+        <div class="modal" id="modal">
+            <h3>esto es un modal</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione nemo veritatis rem id laudantium? Iusto
+                veritatis repellat nam placeat eos distinctio obcaecati tenetur est, blanditiis, numquam iste officia
+                veniam labore.</p>
+            <button class="aceptar">Aceptar</button>
+        </div>
+        
 
         <div id="finalPagina"></div>
         <div id="ponerCantidad"></div>
         <div id="tituloCarrito"></div>
         <div id="verCarrito"></div>
         <div id="totalCarrito25"></div>
+
+        <div id="datosCliente"></div>
+        <div id="estadoDatos"></div>
         <div id="confirmarCompra"></div>
 
-        <!-- class="carritoHtml"  -->
+       
 
     </main>
 
@@ -83,6 +100,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./script.js"></script>
 </body>
 
