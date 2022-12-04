@@ -116,11 +116,21 @@ solicitarProductos()
 
 })
 
-//Consumiendo una api de frases
+//,2399,2206,1198,1992,2039,2130,2798,2813,2843
+//,2407,2798
 
-let contador = 0;
+//Consumiendo una api de frases
+setTimeout(() => {
+let tituloFrase = document.getElementById("tituloFrase");
+tituloFrase.innerHTML = `<h2 class="tituloFrase">Suavizar tu Alma y luego tu Piel.</h2>`
+const numeros = [2399,2206,1198,1992,2039,2130,2813,2843]
+let contador = -1;
 setInterval(() => {
-  contador++;
+  if(contador < 8){
+    contador++
+  }else{
+    contador = -1
+  }
   const options = {
     method: "GET",
     headers: {
@@ -134,13 +144,14 @@ setInterval(() => {
 
     .then(
       (data) =>
-        (contenedorAgregar.innerHTML = `<h6 class="frase">${data[
-          contador
-        ].text.toUpperCase()}</h6>`)
-    );
+        (contenedorAgregar.innerHTML = `<div class="frase1" id="fetch"><p class="frase">${data[numeros[contador]
+        ].text.toUpperCase()}</p> <h6 class="frase">${data[numeros[contador]
+        ].author.toUpperCase()}</h6> </div>`
+    ));
 
   let contenedorAgregar = document.getElementById("fetch");
-}, 3000);
+}, 3000);}, 10000);
+
 
 //arma todas las cards
 function mostrarCatalogo(articulos){
