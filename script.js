@@ -498,7 +498,8 @@ function Agregar(numArt) {
 //esta funcion resta la cantidad de un producto que figura en el display de cada uno.
 function Sacar(numArt) {
   existe2 = cantidadPuesta.some((previo) => previo.codigo === numArt);
-  if (existe2 === true) {
+  artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
+  if (existe2 === true && artPrevio.cantidad > 0) {
     artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
     artPrevio.cantidad = artPrevio.cantidad - 1;    
     artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
@@ -517,7 +518,7 @@ function visualizarCarrito(numArt) {
   artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
   artSeleccionado = articulos.find((el) => el.codigo === numArt);
   existe2 = cantidadPuesta.some((previo) => previo.codigo === numArt);
-  if (existe2 === true) {
+  if (existe2 === true && artPrevio.cantidad > 0) {
     subTotal(artSeleccionado.precio, artPrevio.cantidad);
     articuloCargando(artPrevio.cantidad, artSeleccionado.descripcion);
     let existe = comprados.some((comprado) => comprado.codigo === numArt);
