@@ -133,7 +133,9 @@ h3 {
     overflow-y: hidden;
 }
 
-
+.card{
+    height: 600px;
+}
 
 .card-body {
     display: flex;
@@ -229,7 +231,7 @@ h3 {
 
 }
 
-#tituloCarrito {
+/*#tituloCarrito {
     display: flex;
     flex-direction: row;
     text-align: center;
@@ -237,24 +239,78 @@ h3 {
 
 
 
-}
+}*/
 
 
 /* CLASES DE LA TABLA DEL CARRITO DE COMPRAS */
 
+.tituloCarro{
+    text-align: center;
+    margin: 20px;
+}
 
+.table{
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*margin-right: 10px;*/
+    justify-content: flex-start;
+    border: 0;
+
+}
+
+.table tbody{
+    width: 95vw;
+    border: 0;
+}
 
 .table tr th {
     border: 1px solid black;
     text-align: center;
-    width: 10vw;
+    width: 15vw;
+    font-size: 12px;
+    margin: 0;
+    padding: 5px;
+   
+    
+}
+
+.table1{
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    justify-content: flex-start;
+    border: 0;
+
+}
+
+.table1 tbody{
+    width: 95vw;
+    border: 0;
 }
 
 .table1 tr td {
 
     border: 1px solid black;
     text-align: center;
-    width: 10vw;
+    width: 15vw;
+    font-size: 10px;
+    margin: 0;
+    padding: 5px;
+
+    
+}
+
+.total{
+    text-align: center;
+    margin: 20px 0 40px 0;
 }
 
 
@@ -299,6 +355,36 @@ h3 {
 .tituloFrase{
     text-align: center;
     margin-bottom: 0;
+}
+
+
+
+.datosC{
+    display: flex;    
+    flex-direction: column;
+    align-content: center;    
+}
+
+.estado{
+    text-align: center;
+    margin: 20px;
+}
+
+.botonConfirmarCompra{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;    
+}
+
+.ver{
+    text-align: center;
+}
+
+.ponerCant{
+    text-align: center;
+    color: red;
+    font-size: 30px;
+    margin-bottom: 30px;
 }
 
 /* medias query */
@@ -351,6 +437,48 @@ h3 {
 
     .formulario form button {
         width: 50vw;
+    }
+
+    .datosC{
+        width: 100vw; 
+        justify-content: center;  
+        align-items: center;
+    }
+
+    .input{
+        width: 50vw;
+        
+    }
+
+    .table{
+        
+        justify-content: center;
+    
+    }
+
+    .table tr th {        
+        font-size: 20px;
+        margin: 0;
+        padding: 5px;
+        justify-content: center;
+        
+    }
+    
+    .table1{
+       
+        justify-content: center;
+    
+    }
+
+    .table1 tr td {
+    
+        
+        font-size: 20px;
+        margin: 0;
+        padding: 5px;
+        justify-content: center;
+    
+        
     }
 
 }
@@ -419,4 +547,6 @@ h3 {
     .formulario form button {
         width: 30vw;
     }
+
+    
 }

@@ -1,3 +1,5 @@
+/////////////////Carga de todo el catalogo de productos.
+
 //Clase constructora de los objetos articulos
 class Articulo {
   constructor(codigo, descripcion, precio, imagen) {
@@ -7,6 +9,7 @@ class Articulo {
     this.imagen = imagen;
   }
 }
+
 //datos de los objetos articulos
 const articulo1 = new Articulo(
   1,
@@ -97,68 +100,28 @@ const articulos1 = [
   articulo12,
 ];
 
-//probando asincronia
-
-const solicitarProductos = () => {
+const solicitarArticulos = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(articulos1);
-    }, 500);
+    }, 1000);
   });
 };
 
 let articulos = []
 
-solicitarProductos()
-.then((res) => {
-    articulos = res ;
+solicitarArticulos()
+  .then((res) => {
+    articulos = res;
     mostrarCatalogo(articulos);
+  });
 
-})
-
-//,2399,2206,1198,1992,2039,2130,2798,2813,2843
-//,2407,2798
-
-//Consumiendo una api de frases
-setTimeout(() => {
-let tituloFrase = document.getElementById("tituloFrase");
-tituloFrase.innerHTML = `<h2 class="tituloFrase">Suavizar tu Alma y luego tu Piel.</h2>`
-const numeros = [2399,2206,1198,1992,2039,2130,2813,2843]
-let contador = -1;
-setInterval(() => {
-  if(contador < 8){
-    contador++
-  }else{
-    contador = -1
-  }
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "ccaefc98fbmsha73882bc11b185cp103be5jsne0776200c6ca",
-      "X-RapidAPI-Host": "quotes-villa.p.rapidapi.com",
-    },
-  };
-
-  fetch("https://quotes-villa.p.rapidapi.com/quotes/art", options)
-    .then((response) => response.json())
-
-    .then(
-      (data) =>
-        (contenedorAgregar.innerHTML = `<div class="frase1" id="fetch"><p class="frase">${data[numeros[contador]
-        ].text.toUpperCase()}</p> <h6 class="frase">${data[numeros[contador]
-        ].author.toUpperCase()}</h6> </div>`
-    ));
-
-  let contenedorAgregar = document.getElementById("fetch");
-}, 3000);}, 10000);
-
-
-//arma todas las cards
-function mostrarCatalogo(articulos){
-articulos.forEach((art) => {
-  let content = document.getElementById("vidriera");
-  let content1 = document.createElement("div");
-  content1.innerHTML = `
+//Arma todas las cards
+function mostrarCatalogo(articulos) {
+  articulos.forEach((art) => {
+    let content = document.getElementById("vidriera");
+    let content1 = document.createElement("div");
+    content1.innerHTML = `
     <div class="card mt-3 mb-3" style="width: 18rem;">
     <img src="${art.imagen}">  class="card-img-top" alt="articulo(${art.codigo})">
                 <div class="card-body text-dark bg-secondary bg-opacity-25">                    
@@ -168,7 +131,7 @@ articulos.forEach((art) => {
                         <button class="btn btn-primary" onclick="Sacar(${art.codigo})">-</button>
                         <br>
                         <div id="${art.codigo}">                      
-                            <input class="display" type="text" min="1" placeholder="1" name="cantidad" disabled></input>
+                            <input class="display" type="text" min="0" placeholder="0" name="cantidad" disabled></input>
                         </div>
                         <br>                      
                         <button class="btn btn-primary" onclick="Agregar(${art.codigo})">+</button>
@@ -179,18 +142,61 @@ articulos.forEach((art) => {
 
                     </div>
                `;
-  content.append(content1);
-});
+    content.append(content1);
+  });
 }
 
-//subtotal.
+
+
+
+//Consumiendo una api de frases.
+//Se usa un array de numeros en nuestro programa, que tiene los numeros de posicion de los objetos
+//en el array de objetos que devuelve la api de frases, que contienen ciertas frases en español adecuadas.
+//En cada objeto elegido se rescatan los elementos o parametros, text y author.
+//Le damos un una demora en la carga del titulo y las frases con un setTimeout.
+//Dejamos un setInterval, para que continuamente vaya reproduciendo las frases.
+setTimeout(() => {
+  let tituloFrase = document.getElementById("tituloFrase");
+  tituloFrase.innerHTML = `<h2 class="tituloFrase">Suavizar tu Alma y tu Piel.</h2>`;
+  const numeros = [2399, 2206, 1198, 1992, 2039, 2130, 2813, 2843];
+  let contador = -1;
+  setInterval(() => {
+    if (contador < 8) {
+      contador++;
+    } else {
+      contador = -1;
+    }
+    const options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": "ccaefc98fbmsha73882bc11b185cp103be5jsne0776200c6ca",
+        "X-RapidAPI-Host": "quotes-villa.p.rapidapi.com",
+      },
+    };
+
+    fetch("https://quotes-villa.p.rapidapi.com/quotes/art", options)
+      .then((response) => response.json())
+      .then(
+        (data) =>
+        (contenedorAgregar.innerHTML = `<div class="frase1" id="fetch"><p class="frase">${data[numeros[contador]
+        ].text.toUpperCase()}</p> <h6 class="frase">${data[numeros[contador]
+        ].author.toUpperCase()}</h6> </div>`
+        ));
+    let contenedorAgregar = document.getElementById("fetch");
+  }, 10000);
+}, 1000);
+
+
+
+
+//subtotal cuando se agrega cada articulo al carro.
 let subtotal = 0;
 function subTotal(precio, cant) {
   subtotal = 0;
   subtotal = precio * cant;
 }
 
-//calcula el total del carro
+//calcula el total del carro. se crea aca un boton para confirmar la compra
 let total = 0;
 function totalCarrito() {
   verCarrito.innerHTML = ``;
@@ -210,42 +216,39 @@ function totalCarrito() {
   }
 }
 
-//arma el encabezado de la tablita
+//arma el encabezado de la tablita y desde que se agrega el primer articulo aparecen los input para que el usuario
+//complete sus datos para el envio del pedido.
 let tituloCarro = 0;
 function encabezadoTablita() {
   verCarrito.innerHTML = ``;
   if (tituloCarro === 0 && comprados.length > 0) {
     let padre1 = document.getElementById("tituloCarrito");
     let contenedor1 = document.createElement("div");
-    contenedor1.innerHTML = `<h2>Carrito de Compras.</h2>
-<table class="table" border="1" cellpading="20" cellspacing="0">
+    contenedor1.innerHTML = `<h2 class="tituloCarro">Carrito de Compras.</h2>
+<table class="table" border="1" cellpading="0" cellspacing="0">
                 <tr>
-                    <th>CODIGO</th>
-                    <th>DESCRIPCION</th>
-                    <th>CANTIDAD</th>
+                    <th>COD.</th>
+                    <th>DESCRIP.</th>
+                    <th>CANT.</th>
                     <th>PRECIO</th>
-                    <th>SUBTOTAL</th>
+                    <th>SUBT.</th>
                     <th></th>
                 </tr>                                                   
             </table>`;
     padre1.append(contenedor1);
     let datos = document.getElementById("datosCliente");
-    let contenedorDatos = document.createElement("div");
-    contenedorDatos.innerHTML = `
+    datos.innerHTML = `
         <label for="nombre">Nombre y Apellido:*</label>        
-        <input type="text" placeholder="Nombre y Apellido" name="nombre" id="nombre" required>
+        <input class="input" type="text" placeholder="Nombre y Apellido" name="nombre" id="nombre" required>
         <label for="nombre">Dirección:*</label>        
-        <input type="text" placeholder="Dirección" name="direccion" id="direccion" required>
+        <input class="input" type="text" placeholder="Dirección" name="direccion" id="direccion" required>
         <label for="nombre">Telefono de Contacto:*</label>        
-        <input type="number" placeholder="Telefono de Contacto" name="nombre" id="telefono" required>                        
+        <input class="input" type="number" placeholder="Telefono de Contacto" name="nombre" id="telefono" required>                        
         `;
-    datos.append(contenedorDatos);
-    //verCarrito.innerHTML = ``;
     totalCarrito();
     tituloCarro = 1;
   } else if (comprados.length > 0) {
     verCarrito.innerHTML = ``;
-
     totalCarrito();
   } else {
     let padre1 = document.getElementById("tituloCarrito");
@@ -259,7 +262,7 @@ function encabezadoTablita() {
   }
 }
 
-//icono de eliminar.
+//icono de eliminar que se anexa a cada articulo que se agrega al carro.
 let iconoEliminar = `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -295,7 +298,9 @@ function agregarArticulos() {
   }
 }
 
-//elimina los articulos comprados, se la llama desde el simbolo de tachito que acompaña a cada articulo en el carro.
+//elimina los articulos comprados, se la llama desde el icono de tachito que acompaña a cada articulo en el carro.
+//en esta funcion tambien se usa la libreria Toastify para mostrar un cartelito en la esquina superior derecha
+//con el articulo que se esta quitando.
 let aEliminar;
 function eliminar(posicion) {
   aEliminar = comprados[posicion];
@@ -316,6 +321,7 @@ function eliminar(posicion) {
   estadoDatos.innerHTML = ``;
 }
 
+//en esta funcion se toman los datos que el usuario ingresa antes de confirmar su pedido.
 let nombreCliente = "";
 let direccion = "";
 let telefono = "";
@@ -334,7 +340,9 @@ function tomarDatos() {
   });
 }
 
-//cuando el usuario confirma el carro que ya se finalizo la compra, tambien se borra el carro que se estaba
+
+//al confirmar el carro esta funcion corrobora que el usuario haya cargado cada uno de los datos correspondientes.
+//Y cuando el usuario confirma el carro que ya se finalizo la compra, tambien se borra el carro que se estaba
 //armando del localstorage.
 let estadoDatos = document.getElementById("estadoDatos");
 function confirmarCarrito() {
@@ -364,16 +372,20 @@ function confirmarCarrito() {
   }
 }
 
+
+//////////////////////////Uso de Librerias.
+//Aca se abre un sweetAlert que le confirma al usuario que se recibio el pedido y que se le enviara prontamente.
 function confirmarEnvio() {
   Swal.fire({
     title: `${nombreCliente}`,
-    text: `Tu pedido ingreso correctamente. Te lo enviaremos a la brevedad a ${direccion}!`,
+    text: `Tu pedido ingreso correctamente. Te lo enviaremos a la brevedad a ${direccion}.`,
     width: 800,
     icon: "success",
     confirmButtonText: "Aceptar",
   });
 }
 
+//Se muestra en la esquina superior derecha un cartelito cada vez que se agrega un articulo al carrito.
 function articuloCargando(cantidad, descripcion) {
   Toastify({
     text: "Se agrego al carrito " + cantidad + " " + descripcion,
@@ -382,6 +394,8 @@ function articuloCargando(cantidad, descripcion) {
     position: "right",
   }).showToast();
 }
+
+
 
 // constructor articulos comprados
 class Comprado {
@@ -394,8 +408,10 @@ class Comprado {
   }
 }
 
-//funcion de compra, forma el array de los objetos articulos comprados
+
 let comprados = [];
+
+//funcion de compra, forma el array de los objetos articulos comprados
 function compra(codigo, descripcion, precio, cantidad, subtotal) {
   const comprado = new Comprado(
     codigo,
@@ -422,7 +438,7 @@ class Comprado1 {
 let renovar = 0;
 function renovarCarrito() {
   localStorage.length === 0 &&
-    (verCarrito.innerHTML = `El carrito está vacío!`);
+    (verCarrito.innerHTML = `<p class="ver">El carrito está vacío!</p>`);
   if (renovar === 0) {
     guardados = JSON.parse(localStorage.getItem("productosComprados"));
     if (localStorage.length > 0) {
@@ -435,44 +451,82 @@ function renovarCarrito() {
   }
 }
 
-//esta funcion anexa cantidad de un producto al carrito
-let cantidad = 1;
-function Agregar(numArt) {
-  cantidad++;
-  let stringId = numArt.toString();
-  let container = document.getElementById(stringId);
-  container.innerHTML = `<input class="display" type="text" min="1" placeholder="${cantidad}" name="cantidad" disabled>`;
+
+
+//aca se forma un array de objetos con el codigo y la cantidad que vienen de cada articulo individualmente,
+//asi las unidades de cada uno quedan bien identificadas y se agregan al carro correctamente.
+//Permite fijar cantidades en los display y despues agregarlas, o tambien dejarlas fijas en los mismos para agregar
+//mas si se lo desea.
+class Puesta {
+  constructor(codigo, cantidad) {
+    this.codigo = Number(codigo);
+    this.cantidad = Number(cantidad);
+  }
 }
 
-//esta funcion saca cantidad de un producto al carrito
+let cantidadPuesta = []
+
+function previa(codigo, cantidad) {
+  const previo = new Puesta(codigo, cantidad);
+  cantidadPuesta.push(previo);
+}
+
+
+
+
+//esta funcion suma la cantidad de un producto que figura en el display de cada uno.
+let cantidad = 0;
+let stringId;
+let existe2;
+let artPrevio;
+function Agregar(numArt) {
+  existe2 = cantidadPuesta.some((previo) => previo.codigo === numArt);
+  if (existe2 === false) {
+    cantidad = 0;
+    cantidad++;
+    previa(numArt, cantidad);    
+  } else {
+    artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
+    artPrevio.cantidad = artPrevio.cantidad + 1;    
+  }
+  artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
+  stringId = numArt.toString();
+  let container = document.getElementById(stringId);
+  container.innerHTML = `<input class="display" type="text" min="1" placeholder="${artPrevio.cantidad}" name="cantidad" disabled>`;
+}
+
+//esta funcion resta la cantidad de un producto que figura en el display de cada uno.
 function Sacar(numArt) {
-  if (cantidad > 0) {
-    cantidad--;
-    let stringId = numArt.toString();
+  existe2 = cantidadPuesta.some((previo) => previo.codigo === numArt);
+  if (existe2 === true) {
+    artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
+    artPrevio.cantidad = artPrevio.cantidad - 1;    
+    artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
+    stringId = numArt.toString();
     let container = document.getElementById(stringId);
-    container.innerHTML = `<input class="display" type="text" min="1" placeholder="${cantidad}" name="cantidad" disabled>`;
+    container.innerHTML = `<input class="display" type="text" min="1" placeholder="${artPrevio.cantidad}" name="cantidad" disabled>`;
   }
 }
 
 //se activa al presionar el boton agregar carrito, si habia un carrito en el localstorage tambien lo trae y
 //lo tiene en cuenta para continuar la compra.
+//Se fija si el usuario puso la cantidad del producto a comprar, sino se lo sugiere.
+//Si el usuario agrega mas de un articulo que ya habia comprado se lo suma a la cantidad ya existente en el carrito.
 function visualizarCarrito(numArt) {
   renovarCarrito();
-  let stringId = numArt.toString();
-  let container = document.getElementById(stringId);
-  container.innerHTML = `<input class="display" type="text" min="1" placeholder="${cantidad}" name="cantidad" disabled>`;
+  artPrevio = cantidadPuesta.find((el) => el.codigo === numArt);
   artSeleccionado = articulos.find((el) => el.codigo === numArt);
-  console.log(artSeleccionado.descripcion);
-  subTotal(artSeleccionado.precio, cantidad);
-  articuloCargando(cantidad, artSeleccionado.descripcion);
-  if (cantidad > 0) {
+  existe2 = cantidadPuesta.some((previo) => previo.codigo === numArt);
+  if (existe2 === true) {
+    subTotal(artSeleccionado.precio, artPrevio.cantidad);
+    articuloCargando(artPrevio.cantidad, artSeleccionado.descripcion);
     let existe = comprados.some((comprado) => comprado.codigo === numArt);
     if (existe === false) {
       compra(
         artSeleccionado.codigo,
         artSeleccionado.descripcion,
         artSeleccionado.precio,
-        cantidad,
+        artPrevio.cantidad,
         subtotal
       );
       let poner = document.getElementById("ponerCantidad");
@@ -481,26 +535,14 @@ function visualizarCarrito(numArt) {
       tomarDatos();
     } else {
       artBuscado = comprados.find((el) => el.codigo === numArt);
-      for (const objeto of comprados) {
-        if (objeto.codigo === artBuscado.codigo) {
-          borrar = comprados.indexOf(objeto);
-        }
-      }
-      comprados.splice(borrar, 1);
-      compra(
-        artSeleccionado.codigo,
-        artSeleccionado.descripcion,
-        artSeleccionado.precio,
-        cantidad,
-        subtotal
-      );
+      artBuscado.cantidad = artBuscado.cantidad + artPrevio.cantidad;
+      artBuscado.subtotal = artBuscado.subtotal + subtotal;
       verCarrito.innerHTML = ``;
       totalCarrito();
     }
   } else {
     let poner = document.getElementById("ponerCantidad");
-    poner.innerHTML = `<p>Indicar Articulo o Cantidad correctamente.</p>`;
+    poner.innerHTML = `<p>COLOCAR CANTIDAD!!!</p>`;
   }
-  cantidad = 1;
   subtotal = 0;
 }
